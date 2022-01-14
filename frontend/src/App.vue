@@ -1,26 +1,29 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <h1>Hello world!</h1>
-    </div>
+  <div class="container">
+    hello world
+    <LoginModal v-if="isLoginModal" @close-modal="isLoginModal = false">
+    </LoginModal>
+    <button @click="isLoginModal = true">로그인</button>
+    <router-link to="/login">test</router-link>
+    <router-view/>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import LoginModal from '@/components/LoginModal'
 
-#nav {
-  padding: 30px;
+export default {
+  components: {
+    LoginModal
+  },
+  data () {
+    return {
+      isLoginModal: false
+    }
+  }
 }
+</script>
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+<style src="./css/common.css">
+
 </style>
