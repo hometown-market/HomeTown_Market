@@ -1,5 +1,5 @@
 <template>
-  <div class="hm-ui-icon" @click="$emit('icon-click')">
+  <div class="hm-icon" @click="$emit('icon-click')">
     <img v-if="type === 'svg'" :src="require(`@/assets/icons/${name}.svg`)" />
     <img v-else-if="type === 'png'" :src="require(`@/assets/icons/${name}.png`)" />
   </div>
