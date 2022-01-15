@@ -8,8 +8,8 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
 @Getter
+@Entity
 @RequiredArgsConstructor
 public class Wish {
 

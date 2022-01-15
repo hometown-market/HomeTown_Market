@@ -16,7 +16,9 @@ public class Product {
 
     @Id
     @GeneratedValue
+    @Column(name = "product_id")
     private long id;
+
 
     private String name;
     private boolean wish;
@@ -26,7 +28,9 @@ public class Product {
     private String text; //제품 상세
     private long price;
 
-    @ManyToOne
+
+    @ManyToOne(fetch = FetchType.LAZY)
+
     @JoinColumn(name = "user_id")
     private User user;
 
