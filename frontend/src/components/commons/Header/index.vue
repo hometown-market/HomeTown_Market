@@ -1,6 +1,6 @@
 <template>
   <header>
-    <div><img src="@/assets/icons/icon-bars-bk.svg"/></div>
+    <hm-ui-icon name="icon-bars-bk" @icon-click="onIconClick"></hm-ui-icon>
     <div><router-link to="/"><img src="@/assets/logo.svg"/></router-link></div>
     <div>
       <LoginModal v-if="isLoginModal" @close-modal="isLoginModal = false">
