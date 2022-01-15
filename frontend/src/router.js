@@ -9,6 +9,8 @@ import Main from '@/views/main/index.vue'
 import Search from '@/views/search/index.vue'
 import SearchResults from '@/views/search-results/index.vue'
 
+import Component from '@/views/component/index.vue'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -45,6 +47,12 @@ const routes = [
         name: 'signup',
         path: '/signup',
         component: Signup
+      },
+      {
+        // (임시) 컴포넌트
+        name: 'component',
+        path: '/component',
+        component: Component
       }
     ]
   }
