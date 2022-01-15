@@ -7,10 +7,6 @@
 <script>
 
 export default {
-  name: 'SearchInput',
-  components: {
-  },
-  data () {
-  }
+  name: 'hm-ui-search-input'
 }
 </script>
