@@ -2,7 +2,7 @@
   <div class='modal'>
     <div class='overlay'>
       <div class="modal-card">
-        <div class="close-modal" @click="$emit('close-modal')"><img src="@/assets/btn_close.svg"/></div>
+        <div class="close-modal" @click="$emit('close-modal')"><img src="@/assets/icons/icon-close-bk.svg"/></div>
         <div class="title">우동마켓</div>
         <div id="btn-group" class="btn-list">
           <button class="btn-style">구글로 시작하기</button>
@@ -39,8 +39,7 @@ export default {
   top: 0;
 }
 .overlay {
-  opacity: 0.5;
-  background-color: black;
+  background-color: rgb(0, 0, 0, 0.5);
 }
 .modal-card {
   position: relative;
