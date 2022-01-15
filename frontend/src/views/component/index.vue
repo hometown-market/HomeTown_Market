@@ -11,6 +11,7 @@
       @back-icon-click="onClickBackIcon"
       @search-icon-click="onClickSearchIcon"
       @keyup.enter="onClickSearchIcon"
+      @update="(value) => keyword = value"
     />
     <hm-ui-search-input
       readonly

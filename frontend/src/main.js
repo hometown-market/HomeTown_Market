@@ -8,6 +8,7 @@ import _ from 'lodash'
 _.forEach(_.toPairs(Components), ([name, component]) => {
   Vue.component(name, component)
 })
+Vue.prototype.$eventBus = new Vue()
 
 Vue.config.productionTip = false
 

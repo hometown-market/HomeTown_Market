@@ -1,6 +1,8 @@
 <template>
   <div class="product-list">
     <div class="top-container" v-if="type === 'nomal'">
+      <div>{{ total }}개</div>
+      <hm-ui-select v-model="selected" @update="(value) => selected = value"></hm-ui-select>
     </div>
     <div class="list-container">
       <ProductItem v-for="(item, index) in productList" :key="index" :data="item"/>
@@ -17,75 +19,33 @@ export default {
     type: {
       type: String,
       default: 'nomal'
+    },
+    productList: {
+      type: Array
+    },
+    total: {
+      type: Number
+    },
+    keyword: {
+      type: String
     }
   },
   components: {
     ProductItem
   },
+  watch: {
+    selected () {
+      this.$router.replace({
+        query: {
+          keyword: this.keyword,
+          order: this.selected
+        }
+      })
+    }
+  },
   data () {
     return {
-      productList: [
-        {
-          productId: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/103269118_1_1626911735_w354.jpg',
-          product_title: '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          productId: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/103269118_1_1626911735_w354.jpg',
-          product_title: '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          productId: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/103269118_1_1626911735_w354.jpg',
-          product_title: '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          productId: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/103269118_1_1626911735_w354.jpg',
-          product_title: '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          productId: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/103269118_1_1626911735_w354.jpg',
-          product_title: '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          productId: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/103269118_1_1626911735_w354.jpg',
-          product_title: '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        }
-      ]
+      selected: 'date'
     }
   }
 }
@@ -93,8 +53,19 @@ export default {
 
 <style lang="scss">
 .product-list {
-  padding-right: 20px;
-  padding-left: 20px;
+  padding-right: 19px;
+  padding-left: 19px;
+
+  .top-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .list-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 53px 15px;
+  }
 }
 
 </style>
