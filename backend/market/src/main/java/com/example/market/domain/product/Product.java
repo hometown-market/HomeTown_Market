@@ -28,7 +28,9 @@ public class Product {
     private String text; //제품 상세
     private long price;
 
+
     @ManyToOne(fetch = FetchType.LAZY)
+
     @JoinColumn(name = "user_id")
     private User user;
 
