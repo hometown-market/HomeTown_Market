@@ -4,8 +4,8 @@
       v-model="keyword"
       @back-icon-click="onClickBackIcon"
       @search-icon-click="onClickSearchIcon"
-      @keyup.enter="onClickSearchIcon"
-      @focus="onClickSearchIcon"
+      @input-click="onClickInput"
+      @focus="onFocusInput"
       @update="(value) => keyword = value"
       type="search-readonly"
     />
@@ -47,11 +47,19 @@ export default {
     },
     onClickSearchIcon () {
       this.$router.push({
+        name: 'search'
+      })
+    },
+    onFocusInput () {
+      this.$router.push({
         name: 'search',
         query: {
           keyword: this.keyword
         }
       })
+    },
+    onClickInput () {
+      this.onFocusInput()
     },
     fetchProductList () {
       // axios get product_list?recent_type=99&uid=00000000000&order=date
