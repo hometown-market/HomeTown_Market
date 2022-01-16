@@ -3,7 +3,7 @@
     <div class="left-container" v-if="type !== 'main-readonly'">
       <hm-ui-icon name="icon-back-bk" @icon-click="onBackIconClick"></hm-ui-icon>
     </div>
-    <div class="input-container" @click="onClickInputContainer">
+    <div class="input-container" @click="onInputContainerClick">
       <input
         ref="$input"
         v-model="$value"
@@ -82,7 +82,7 @@ export default {
     onSearchIconClick () {
       this.$emit('search-icon-click')
     },
-    onClickInputContainer () {
+    onInputContainerClick () {
       if (this.readonly) {
         this.$emit('input-click')
       }
