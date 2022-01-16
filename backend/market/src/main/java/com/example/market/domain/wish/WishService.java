@@ -12,11 +12,12 @@ public class WishService {
 
     @Transactional
     public void wishing(long productId, String userId) {
+
+        // 리포지토리에서 조회
+        // 널이면 찜 생성
+        // 잇으면 삭제하고 카운트 줄이고
+
         wishRepository.wishing(productId, userId);
     }
 
-    @Transactional
-    public void unwishing(long productId, String userId) {
-        wishRepository.unwishing(productId, userId);
-    }
 }

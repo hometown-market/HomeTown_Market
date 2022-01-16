@@ -11,7 +11,7 @@ public interface WishRepository extends JpaRepository<Wish, Long> {
     @Query(value = "INSERT INTO wish(product_id, user_id) VALUES(:productId, :userId)", nativeQuery = true)
     void wishing(long productId, String userId);
 
-    @Modifying
-    @Query(value = "DELETE FROM wish WHERE product_id = :productId AND user_id = :userId", nativeQuery = true)
-    void unwishing(long productId, String userId);
+    //추가할거 삭제, 조회
+
+
 }

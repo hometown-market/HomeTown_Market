@@ -1,6 +1,7 @@
 package com.example.market.domain.user;
 
 import com.example.market.domain.product.Product;
+import com.example.market.domain.wish.Wish;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -8,10 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 
 @Getter
@@ -84,6 +82,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Product> productList;
+
+    @OneToMany(mappedBy = "user")
+    private List<Wish> wishList;
 
 }
 
