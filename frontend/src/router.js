@@ -8,6 +8,7 @@ import PageContainer from '@/containers/PageContainer'
 import Main from '@/views/main/index.vue'
 import Search from '@/views/search/index.vue'
 import SearchResults from '@/views/search-results/index.vue'
+import Detail from '@/views/detail/index.vue'
 
 import Component from '@/views/component/index.vue'
 
@@ -35,6 +36,12 @@ const routes = [
         name: 'search-results',
         path: '/search-results',
         component: SearchResults
+      },
+      {
+        // 상품 상세 화면
+        name: 'detail',
+        path: '/detail',
+        component: Detail
       },
       {
         // 로그인

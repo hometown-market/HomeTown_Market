@@ -1,11 +1,14 @@
 <template>
   <div class="hm-search-input">
-    <div class="left-container" v-if="!readonly">
+    <div class="left-container" v-if="type !== 'main-readonly'">
       <hm-ui-icon name="icon-back-bk" @icon-click="onBackIconClick"></hm-ui-icon>
     </div>
-    <div class="input-container">
+    <div class="input-container" @click="onClickInputContainer">
       <input
+        ref="$input"
+        v-model="$value"
         @input="e => $emit('input', e.target.value)"
+        @focus="e => $emit('focus', e)"
         @blur="e => $emit('blur', e)"
         @keyup="e => $emit('keyup', e)"
         @keydown="e => $emit('keydown', e)"
@@ -15,19 +18,50 @@
       />
       <hm-ui-icon name="icon-search-pc" @icon-click="onSearchIconClick"></hm-ui-icon>
     </div>
-    <div class="right-container" v-if="readonly">
+    <div class="right-container" v-if="type === 'main-readonly'">
       <hm-ui-icon name="icon-like-on" @icon-click="onLikeIconClick"></hm-ui-icon>
     </div>
   </div>
 </template>
 
 <script>
+const TYPES = ['nomal', 'main-readonly', 'search-readonly']
+
 export default {
   name: 'hm-ui-search-input',
   props: {
-    readonly: {
-      type: Boolean,
-      default: false
+    type: {
+      type: String,
+      default: 'nomal',
+      validator: type => TYPES.includes(type.toLowerCase())
+    },
+    value: {
+      type: [String, Number]
+    }
+  },
+  computed: {
+    $value: {
+      get () {
+        return this.value
+      },
+      set (newValue) {
+        this.$emit('update', newValue)
+      }
+    }
+  },
+  data () {
+    return {
+      readonly: false
+    }
+  },
+  created () {
+    if (this.type === 'main-readonly' || this.type === 'search-readonly') {
+      this.readonly = true
+    }
+  },
+  mounted () {
+    if (!this.readonly) {
+      this.$refs.$input.focus()
     }
   },
   methods: {
@@ -39,6 +73,11 @@ export default {
     },
     onSearchIconClick () {
       this.$emit('search-icon-click')
+    },
+    onClickInputContainer () {
+      if (this.readonly) {
+        this.onSearchIconClick()
+      }
     }
   }
 }
@@ -48,7 +87,7 @@ export default {
 .hm-search-input {
   display: flex;
   height: 40px;
-  padding: 16px 20px;
+  padding: 16px 19px;
 
   .input-container {
     background-color: #F0F0F0;
