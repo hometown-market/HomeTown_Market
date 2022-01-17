@@ -20,4 +20,8 @@ public class UserController {
         return null;
     }
 
+    @PostMapping("/login")
+    public String login() {
+        return "ok";
+    }
 }
