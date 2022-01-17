@@ -1,6 +1,6 @@
 <template>
   <header>
-    <hm-ui-icon name="icon-bars-bk" @icon-click="onIconClick"></hm-ui-icon>
+    <hm-ui-icon name="icon-bars-bk" @icon-click="onClickMenuIcon"></hm-ui-icon>
     <div><router-link to="/"><img src="@/assets/logo.svg"/></router-link></div>
     <div>
       <button class="login" @click="onClickLogin">로그인</button>
@@ -20,6 +20,9 @@ export default {
   methods: {
     onClickLogin () {
       this.$eventBus.$emit('showLoginModal')
+    },
+    onClickMenuIcon () {
+      this.$eventBus.$emit('toggleNavbar', true)
     }
   }
 }

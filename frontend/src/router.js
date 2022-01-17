@@ -8,6 +8,7 @@ import PageContainer from '@/containers/PageContainer'
 import Main from '@/views/main/index.vue'
 import Search from '@/views/search/index.vue'
 import SearchResults from '@/views/search-results/index.vue'
+import Category from '@/views/category/index.vue'
 import Detail from '@/views/detail/index.vue'
 
 import Component from '@/views/component/index.vue'
@@ -36,6 +37,12 @@ const routes = [
         name: 'search-results',
         path: '/search-results',
         component: SearchResults
+      },
+      {
+        // 카테고리 화면
+        name: 'category',
+        path: '/category',
+        component: Category
       },
       {
         // 상품 상세 화면

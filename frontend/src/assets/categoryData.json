@@ -1,0 +1,182 @@
+[
+  {
+    "categoryId": "01",
+    "label": "남성의류",
+    "subcategories": [
+      {
+        "categoryId": "0101",
+        "label": "코트",
+        "subcategories": [
+          {
+            "categoryId": "010101",
+            "label": "트렌치코트"
+          },
+          {
+            "categoryId": "010102",
+            "label": "두꺼운코트"
+          },
+          {
+            "categoryId": "010103",
+            "label": "가을코트"
+          }
+        ]
+      },
+      {
+        "categoryId": "0102",
+        "label": "코트2",
+        "subcategories": [
+          {
+            "categoryId": "010201",
+            "label": "트렌치코트2"
+          },
+          {
+            "categoryId": "010202",
+            "label": "두꺼운코트2"
+          },
+          {
+            "categoryId": "010203",
+            "label": "가을코트2"
+          }
+        ]
+      },
+      {
+        "categoryId": "0103",
+        "label": "코트3",
+        "subcategories": [
+          {
+            "categoryId": "010301",
+            "label": "트렌치코트3"
+          },
+          {
+            "categoryId": "010302",
+            "label": "두꺼운코트3"
+          },
+          {
+            "categoryId": "010303",
+            "label": "가을코트3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryId": "02",
+    "label": "여성의류",
+    "subcategories": [
+      {
+        "categoryId": "0201",
+        "label": "코트",
+        "subcategories": [
+          {
+            "categoryId": "020101",
+            "label": "트렌치코트"
+          },
+          {
+            "categoryId": "020102",
+            "label": "두꺼운코트"
+          },
+          {
+            "categoryId": "020103",
+            "label": "가을코트"
+          }
+        ]
+      },
+      {
+        "categoryId": "0202",
+        "label": "코트2",
+        "subcategories": [
+          {
+            "categoryId": "020201",
+            "label": "트렌치코트2"
+          },
+          {
+            "categoryId": "020202",
+            "label": "두꺼운코트2"
+          },
+          {
+            "categoryId": "020203",
+            "label": "가을코트2"
+          }
+        ]
+      },
+      {
+        "categoryId": "0203",
+        "label": "코트3",
+        "subcategories": [
+          {
+            "categoryId": "020301",
+            "label": "트렌치코트3"
+          },
+          {
+            "categoryId": "020302",
+            "label": "두꺼운코트3"
+          },
+          {
+            "categoryId": "020303",
+            "label": "가을코트3"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categoryId": "03",
+    "label": "아동의류",
+    "subcategories": [
+      {
+        "categoryId": "0301",
+        "label": "코트",
+        "subcategories": [
+          {
+            "categoryId": "030101",
+            "label": "트렌치코트"
+          },
+          {
+            "categoryId": "030102",
+            "label": "두꺼운코트"
+          },
+          {
+            "categoryId": "030103",
+            "label": "가을코트"
+          }
+        ]
+      },
+      {
+        "categoryId": "0302",
+        "label": "코트2",
+        "subcategories": [
+          {
+            "categoryId": "030201",
+            "label": "트렌치코트2"
+          },
+          {
+            "categoryId": "030202",
+            "label": "두꺼운코트2"
+          },
+          {
+            "categoryId": "030203",
+            "label": "가을코트2"
+          }
+        ]
+      },
+      {
+        "categoryId": "0303",
+        "label": "코트3",
+        "subcategories": [
+          {
+            "categoryId": "030301",
+            "label": "트렌치코트3"
+          },
+          {
+            "categoryId": "030302",
+            "label": "두꺼운코트3"
+          },
+          {
+            "categoryId": "030303",
+            "label": "가을코트3"
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -1,5 +1,5 @@
 <template>
-  <div class="hm-icon" @click.stop="$emit('icon-click')">
+  <div :class="['hm-icon', sizeClass]" @click.stop="$emit('icon-click')">
     <img v-if="type === 'svg'" :src="require(`@/assets/icons/${name}.svg`)" />
     <img v-else-if="type === 'png'" :src="require(`@/assets/icons/${name}.png`)" />
   </div>
@@ -18,6 +18,15 @@ export default {
       validator: type => TYPES.includes(type.toLowerCase())
     },
     size: { type: [String, Number] }
+  },
+  computed: {
+    sizeClass () {
+      if (this.size) {
+        return 'size' + this.size
+      } else {
+        return ''
+      }
+    }
   }
 }
 </script>
@@ -32,6 +41,12 @@ $primary: #FED07A;
 
   img {
     vertical-align: top;
+  }
+
+  &.size16 {
+    img {
+      width: 16px;
+    }
   }
 }
 </style>
