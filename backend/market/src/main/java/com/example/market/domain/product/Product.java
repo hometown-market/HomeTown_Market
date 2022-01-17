@@ -4,6 +4,7 @@ import com.example.market.domain.user.User;
 import com.example.market.domain.wish.Wish;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,6 +23,8 @@ public class Product {
 
     private String name;
     private boolean wish;
+
+    @Column(name = "uploadDate")
     private LocalDateTime uploadDate;
     private long views; //조회수
     private String productImgUrl;
@@ -34,14 +37,22 @@ public class Product {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "product")
-    private List<Wish> likesList;
+    @Transient
+    private long wishCount; //찜수
 
-//    @OneToMany(mappedBy = "product")
-//    private List<Talk> talkList;
+    public void setWishCount(long wishCount) {
+        this.wishCount = wishCount;
+    }
+
+    @OneToMany(mappedBy = "product")
+    private List<Wish> wishList;
 
     @Transient
-    private long likesCount; //찜수
+    private boolean wishState;
+
+    public void setWishState(boolean wishState) {
+        this.wishState = wishState;
+    }
 
     @PrePersist
     public void uploadDate() {
