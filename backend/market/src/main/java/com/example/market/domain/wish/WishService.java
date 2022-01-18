@@ -2,7 +2,9 @@ package com.example.market.domain.wish;
 
 import com.example.market.domain.product.Product;
 import com.example.market.domain.product.ProductRepository;
+import com.example.market.domain.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +18,7 @@ public class WishService {
     public void wishing(long productId, String userId) {
 
         // 리포지토리에서 조회
-        if(wishRepository.findWish(productId, userId).getUser().getName() == null) {
+        if(wishRepository.findWish(productId, userId) == null) {
             wishRepository.wishing(productId, userId);
 
         } else {

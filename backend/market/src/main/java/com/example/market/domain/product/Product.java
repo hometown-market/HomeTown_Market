@@ -1,10 +1,11 @@
 package com.example.market.domain.product;
 
+import com.example.market.domain.category.Category;
 import com.example.market.domain.user.User;
 import com.example.market.domain.wish.Wish;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,16 +21,15 @@ public class Product {
     @Column(name = "product_id")
     private long id;
 
+    private String title;
 
-    private String name;
-    private boolean wish;
-
-    @Column(name = "uploadDate")
+    @Column(name = "upload_date")
     private LocalDateTime uploadDate;
     private long views; //조회수
     private String productImgUrl;
     private String text; //제품 상세
     private long price;
+    private boolean locateAuthorization;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -48,9 +48,9 @@ public class Product {
     private List<Wish> wishList;
 
     @Transient
-    private boolean wishState;
+    private long wishState = 0;
 
-    public void setWishState(boolean wishState) {
+    public void setWishState(long wishState) {
         this.wishState = wishState;
     }
 
@@ -58,4 +58,21 @@ public class Product {
     public void uploadDate() {
         this.uploadDate = LocalDateTime.now();
     }
+
+    @Builder
+    public Product(String title, Category category, String productImgUrl, String text, long price, User user, long wishState, boolean locateAuthorization) {
+        this.title = title;
+        this.category = category;
+        this.productImgUrl = productImgUrl;
+        this.text = text;
+        this.price = price;
+        this.user = user;
+        this.wishState = wishState;
+        this.locateAuthorization = locateAuthorization;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 }

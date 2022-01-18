@@ -24,13 +24,18 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/api/v1/productList")
+    @GetMapping("/api/product_list")
     public void productList(Authentication authentication, Pageable pageable) {
         productService.searchAll(authentication.getName(), pageable);
     }
 
-    @GetMapping("/search")
-    public void search(@RequestParam String productName, Pageable pageable) {
-        productService.searching(productName, pageable);
+    @GetMapping("/api/product_list")
+    public void search(Authentication authentication, @RequestParam String keyword, Pageable pageable) {
+        productService.searching(authentication.getName(), keyword, pageable);
+    }
+
+    @GetMapping("/api/product_list/{categoryId}")
+    public void categoryProduct(Authentication authentication, @PathVariable long categoryId, Pageable pageable) {
+        productService.categoryProductList(authentication.getName(), categoryId, pageable);
     }
 }
