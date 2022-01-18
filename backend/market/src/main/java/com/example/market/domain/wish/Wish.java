@@ -9,8 +9,9 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 
 @Getter
-@Entity
+@Table
 @RequiredArgsConstructor
+@Entity
 public class Wish {
 
     @Id

@@ -20,6 +20,8 @@ public class Categories {
 
     private String categoryName;
     private long parentId;
+
+    @OneToMany
     private List<Categories> subCategories;
 
     public Categories(long categoryId, String categoryName, Long parentId) {

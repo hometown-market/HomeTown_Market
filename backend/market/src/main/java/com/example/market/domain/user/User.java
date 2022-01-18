@@ -1,6 +1,7 @@
 package com.example.market.domain.user;
 
 import com.example.market.domain.product.Product;
+import com.example.market.domain.wish.Wish;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -47,28 +48,29 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return getEmail();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
     }
+
 
     @Id
     @GeneratedValue
@@ -84,6 +86,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Product> productList;
+
+    @OneToMany(mappedBy = "user")
+    private List<Wish> wishList;
 
 }
 
