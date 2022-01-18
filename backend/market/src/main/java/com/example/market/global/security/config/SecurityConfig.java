@@ -2,11 +2,13 @@ package com.example.market.global.security.config;
 
 import com.example.market.domain.user.service.UserDetailsServiceImpl;
 import com.example.market.global.security.filter.JwtAuthenticationFilter;
+import com.example.market.global.security.filter.JwtAuthorizeFilter;
 import com.example.market.global.security.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,6 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
 
+    private final JwtTokenUtil jwtTokenUtil;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -33,6 +37,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
@@ -48,7 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 anyRequest().authenticated();
 
 
-        http.addFilter(new JwtAuthenticationFilter(authenticationManager(),new JwtTokenUtil()));
+        http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(),jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(new JwtAuthorizeFilter(jwtTokenUtil,userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
 
     }
