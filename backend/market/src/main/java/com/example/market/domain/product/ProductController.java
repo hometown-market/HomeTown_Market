@@ -24,7 +24,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("api/v1/productList")
+    @GetMapping("/api/v1/productList")
     public void productList(Authentication authentication, Pageable pageable) {
         productService.searchAll(authentication.getName(), pageable);
     }

@@ -17,8 +17,9 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public void searching(String keyword, Pageable pageable) {
-        productRepository.search(keyword, pageable);
+    public Page<Product> searching(String keyword, Pageable pageable) {
+        Page<Product> searchProduct = productRepository.search(keyword, pageable);
+        return searchProduct;
     }
 
     @Transactional
