@@ -4,6 +4,7 @@
       type="main-readonly"
       @like-icon-click="onClickLikeIcon"
       @search-icon-click="onClickReadonly"
+      @input-click="onClickReadonly"
       @update="(value) => keyword = value"
     />
     <div class="slider">

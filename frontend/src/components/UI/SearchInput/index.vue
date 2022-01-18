@@ -3,7 +3,7 @@
     <div class="left-container" v-if="type !== 'main-readonly'">
       <hm-ui-icon name="icon-back-bk" @icon-click="onBackIconClick"></hm-ui-icon>
     </div>
-    <div class="input-container" @click="onClickInputContainer">
+    <div class="input-container" @click="onInputContainerClick">
       <input
         ref="$input"
         v-model="$value"
@@ -16,7 +16,7 @@
         placeholder="검색어를 입력해주세요"
         :disabled="readonly"
       />
-      <hm-ui-icon name="icon-search-pc" @icon-click="onSearchIconClick"></hm-ui-icon>
+      <hm-ui-icon :name="searchIconName" @icon-click="onSearchIconClick"></hm-ui-icon>
     </div>
     <div class="right-container" v-if="type === 'main-readonly'">
       <hm-ui-icon name="icon-like-on" @icon-click="onLikeIconClick"></hm-ui-icon>
@@ -47,6 +47,14 @@ export default {
       set (newValue) {
         this.$emit('update', newValue)
       }
+    },
+
+    searchIconName () {
+      if (this.type === 'search-readonly') {
+        return 'icon-close-g'
+      } else {
+        return 'icon-search-pc'
+      }
     }
   },
   data () {
@@ -74,9 +82,9 @@ export default {
     onSearchIconClick () {
       this.$emit('search-icon-click')
     },
-    onClickInputContainer () {
+    onInputContainerClick () {
       if (this.readonly) {
-        this.onSearchIconClick()
+        this.$emit('input-click')
       }
     }
   }

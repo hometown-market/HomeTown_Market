@@ -1,0 +1,22 @@
+{
+  "categoryId": "01",
+  "label": "남성의류",
+  "subCategories": [
+    {
+      "categoryId": "0101",
+      "label": "코트"
+    },
+    {
+      "categoryId": "0102",
+      "label": "바지"
+    },
+    {
+      "categoryId": "0103",
+      "label": "티셔츠"
+    },
+    {
+      "categoryId": "0104",
+      "label": "맨투맨"
+    }
+  ]
+}
