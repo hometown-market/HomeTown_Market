@@ -16,21 +16,21 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public Categories categoryRoot() {
-        Map<Long, List<Categories>> categoryGroup = new HashMap<>();
-        for (Categories c : categoryRepository.findAll()) {
-            Categories categories = new Categories(c.getCategoryId(), c.getCategoryName(), c.getParentId());
+    public Category categoryRoot() {
+        Map<Long, List<Category>> categoryGroup = new HashMap<>();
+        for (Category c : categoryRepository.findAll()) {
+            Category categories = new Category(c.getCategoryId(), c.getCategoryName(), c.getParentId());
             categoryGroup.computeIfAbsent(categories.getParentId(), k -> new ArrayList<>()).add(categories);
         }
 
-        Categories rootCategory = new Categories(0l, "ROOT", null);
+        Category rootCategory = new Category(00l, "START", null);
         addSubCategories(rootCategory, categoryGroup);
 
         return rootCategory;
     }
 
-    private void addSubCategories(Categories parent, Map<Long, List<Categories>> groupingByParentId) {
-        List<Categories> subCategories = groupingByParentId.get(parent.getCategoryId());
+    private void addSubCategories(Category parent, Map<Long, List<Category>> groupingByParentId) {
+        List<Category> subCategories = groupingByParentId.get(parent.getCategoryId());
 
         if(subCategories == null) {
             return;
@@ -38,8 +38,9 @@ public class CategoryService {
 
         parent.setSubCategories(subCategories);
 
-        for (Categories s : subCategories) {
+        for (Category s : subCategories) {
             addSubCategories(s, groupingByParentId);
         }
     }
+
 }

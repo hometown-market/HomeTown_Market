@@ -1,5 +1,6 @@
 package com.example.market.domain.category;
 
+import com.example.market.domain.product.Product;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class Categories {
+public class Category {
 
     @Id
     @GeneratedValue
@@ -20,11 +21,12 @@ public class Categories {
 
     private String categoryName;
     private long parentId;
+    private List<Category> subCategories;
 
-    @OneToMany
-    private List<Categories> subCategories;
+    @OneToMany(mappedBy = "category")
+    private List<Product> productList;
 
-    public Categories(long categoryId, String categoryName, Long parentId) {
+    public Category(long categoryId, String categoryName, Long parentId) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.parentId = parentId;
