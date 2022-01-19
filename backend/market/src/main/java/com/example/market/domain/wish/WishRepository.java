@@ -17,10 +17,10 @@ public interface WishRepository extends JpaRepository<Wish, Long> {
 
     //추가할거 삭제, 조회
     @Modifying
-    @Query(value = "SELECT * FROM wish WHERE post_id = :postId AND user_id = :userId", nativeQuery = true)
+    @Query(value = "SELECT * FROM wish WHERE product_id = :productId AND user_id = :userId", nativeQuery = true)
     Wish findWish(long productId, String userId);
 
     @Modifying
-    @Query(value = "DELETE FROM wish WHERE post_id = :postId AND user_id = :userId", nativeQuery = true)
+    @Query(value = "DELETE FROM wish WHERE product_id = :productId AND user_id = :userId", nativeQuery = true)
     Wish deleteWish(long productId, String userId);
 }
