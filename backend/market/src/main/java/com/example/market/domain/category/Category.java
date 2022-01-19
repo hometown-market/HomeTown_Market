@@ -18,17 +18,17 @@ public class Category {
     @Id
     @GeneratedValue
     private long categoryId;
-
-    private String categoryName;
-    private long parentId;
-    private List<Category> subCategories;
-
-    @OneToMany(mappedBy = "category")
-    private List<Product> productList;
-
-    public Category(long categoryId, String categoryName, Long parentId) {
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.parentId = parentId;
-    }
+//
+//    private String categoryName;
+//    private long parentId;
+//
+//
+//    @OneToMany(mappedBy = "category")
+//    private List<Product> productList;
+//
+//    public Category(long categoryId, String categoryName, Long parentId) {
+//        this.categoryId = categoryId;
+//        this.categoryName = categoryName;
+//        this.parentId = parentId;
+//    }
 }

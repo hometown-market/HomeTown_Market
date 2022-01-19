@@ -14,33 +14,32 @@ import java.util.Map;
 @Transactional
 public class CategoryService {
 
-    private final CategoryRepository categoryRepository;
-
-    public Category categoryRoot() {
-        Map<Long, List<Category>> categoryGroup = new HashMap<>();
-        for (Category c : categoryRepository.findAll()) {
-            Category categories = new Category(c.getCategoryId(), c.getCategoryName(), c.getParentId());
-            categoryGroup.computeIfAbsent(categories.getParentId(), k -> new ArrayList<>()).add(categories);
-        }
-
-        Category rootCategory = new Category(00l, "START", null);
-        addSubCategories(rootCategory, categoryGroup);
-
-        return rootCategory;
-    }
-
-    private void addSubCategories(Category parent, Map<Long, List<Category>> groupingByParentId) {
-        List<Category> subCategories = groupingByParentId.get(parent.getCategoryId());
-
-        if(subCategories == null) {
-            return;
-        }
-
-        parent.setSubCategories(subCategories);
-
-        for (Category s : subCategories) {
-            addSubCategories(s, groupingByParentId);
-        }
-    }
+//    private final CategoryRepository categoryRepository;
+//
+//    public Category categoryRoot() {
+//        Map<Long, List<Category>> categoryGroup = new HashMap<>();
+//        for (Category c : categoryRepository.findAll()) {
+//            Category categories = new Category(c.getCategoryId(), c.getCategoryName(), c.getParentId());
+//            categoryGroup.computeIfAbsent(categories.getParentId(), k -> new ArrayList<>()).add(categories);
+//        }
+//
+//        Category rootCategory = new Category(00l, "START", null);
+//        addSubCategories(rootCategory, categoryGroup);
+//
+//        return rootCategory;
+//    }
+//
+//    private void addSubCategories(Category parent, Map<Long, List<Category>> groupingByParentId) {
+//        List<Category> subCategories = groupingByParentId.get(parent.getCategoryId());
+//
+//        if(subCategories == null) {
+//            return;
+//        }
+//
+//
+//        for (Category s : subCategories) {
+//            addSubCategories(s, groupingByParentId);
+//        }
+//    }
 
 }
