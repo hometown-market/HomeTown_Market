@@ -4,8 +4,6 @@ import com.example.market.domain.wish.WishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -25,17 +23,22 @@ public class ProductController {
     }
 
     @GetMapping("/api/product_list")
-    public void productList(Authentication authentication, Pageable pageable) {
-        productService.searchAll(authentication.getName(), pageable);
+    public void productList(Authentication authentication) {
+        productService.searchAll(authentication.getName());
     }
 
     @GetMapping("/api/product_list")
-    public void search(Authentication authentication, @RequestParam String keyword, Pageable pageable) {
-        productService.searching(authentication.getName(), keyword, pageable);
+    public void search(Authentication authentication, @RequestParam String keyword) {
+        productService.searching(authentication.getName(), keyword);
     }
 
     @GetMapping("/api/product_list/{categoryId}")
-    public void categoryProduct(Authentication authentication, @PathVariable long categoryId, Pageable pageable) {
-        productService.categoryProductList(authentication.getName(), categoryId, pageable);
+    public void categoryProduct(Authentication authentication, @PathVariable long categoryId) {
+        productService.categoryProductList(authentication.getName(), categoryId);
+    }
+
+    @GetMapping("/product/{productId}")
+    public void productDetail(Authentication authentication, @PathVariable long productId) {
+        productService.getProductDto(productId, authentication.getName());
     }
 }
