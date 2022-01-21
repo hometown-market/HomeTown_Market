@@ -23,7 +23,7 @@ public class CategoryService {
             categoryGroup.computeIfAbsent(categories.getParentId(), k -> new ArrayList<>()).add(categories);
         }
 
-        CategoryDto categoryP = new CategoryDto(00l, "START", null);
+        CategoryDto categoryP = new CategoryDto(0L, "START", null);
         addSubCategories(categoryP, categoryGroup);
 
         return categoryP;

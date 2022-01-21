@@ -3,28 +3,26 @@ package com.example.market.domain.wish;
 import com.example.market.domain.product.Product;
 import com.example.market.domain.product.ProductRepository;
 import com.example.market.domain.user.User;
+import com.example.market.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class WishService {
-//
-//    private final WishRepository wishRepository;
-//
-//    @Transactional
-//    public void wishing(long productId, String userId) {
-//
-//        // 리포지토리에서 조회
-//        if(wishRepository.findWish(productId, userId) == null) {
-//            wishRepository.wishing(productId, userId);
-//
-//        } else {
-//            wishRepository.deleteWish(productId, userId);
-//        }
-//        // 널이면 찜 생성
-//        // 있으면 삭제하고 카운트 줄이고
-//    }
+
+    private final WishRepository wishRepository;
+    private final ProductRepository productRepository;
+    private final UserRepository userRepository;
+
+    @Transactional
+    public void wishing(String userName, long productId) {
+        Product product = productRepository.getById(productId);
+        User user = userRepository.findByName(userName);
+        for(Wish wish : wishRepository.findAll()) {
+            if(wish.getProduct().getId() == productId && wish.getUser().getName().equals(userName)) wishRepository.delete(wish);
+        }
+        wishRepository.findAll().add(new Wish(product, user));
+    }
 }

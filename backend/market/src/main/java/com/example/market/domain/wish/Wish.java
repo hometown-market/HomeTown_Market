@@ -2,12 +2,12 @@ package com.example.market.domain.wish;
 
 import com.example.market.domain.product.Product;
 import com.example.market.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Table(name = "wish", uniqueConstraints = {
@@ -19,7 +19,6 @@ public class Wish {
 
     @Id
     @GeneratedValue
-    @Column(name = "wish_id")
     private long id;
 
     @ManyToOne
@@ -28,6 +27,7 @@ public class Wish {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties({"productList"})
     private User user;
 
     @Builder

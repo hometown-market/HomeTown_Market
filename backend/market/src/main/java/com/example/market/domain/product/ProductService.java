@@ -2,13 +2,12 @@ package com.example.market.domain.product;
 
 import com.example.market.domain.user.User;
 import com.example.market.domain.user.repository.UserRepository;
+import com.example.market.domain.wish.Wish;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 
 @Service
@@ -18,70 +17,55 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
-    @Transactional
-    public Page<Product> searching(String userId, String keyword) {
-        PageRequest pageRequest = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "name"));
-        long resultCount = productRepository.searchCount(keyword);
-        Page<Product> searchProduct = productRepository.search(keyword, pageRequest, resultCount);
 
-        searchProduct.forEach(product -> {
-            product.setWishCount(product.getWishList().size());
-            product.getWishList().forEach(wish -> {
-                if (wish.getUser().getName() == userId) product.setWishState(1);
-            });
-        });
-        return searchProduct;
+    @Transactional
+    public Page<Product> search(String keyword, Pageable pageable) {
+        return productRepository.findByTitle(keyword, pageable);
     }
 
     @Transactional
-    public Page<Product> searchAll(String userId) {
-        PageRequest pageRequest = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "name"));
-
-        Page<Product> products = productRepository.productList(pageRequest);
-
-        products.forEach(product -> {
+    public Page<Product> productList(Pageable pageable, String userName) {
+        Page<Product> products = productRepository.findAll(pageable);
+        for (Product product : products) {
             product.setWishCount(product.getWishList().size());
             product.getWishList().forEach(wish -> {
-                if (wish.getUser().getName() == userId) product.setWishState(1);
+                if (wish.getUser().getName().equals(userName)) product.setIsWish(true);
             });
-        });
+        }
         return products;
     }
 
     @Transactional
-    public Page<Product> categoryProductList(String userId, long categoryId) {
-        PageRequest pageRequest = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "name"));
-        long resultCount = productRepository.categoryProductCount(categoryId);
-        Page<Product> categoryProducts = productRepository.categoryProduct(categoryId, pageRequest, resultCount);
-
-        categoryProducts.forEach(product -> {
-            product.setWishCount(product.getWishList().size());
-            product.getWishList().forEach(wish -> {
-                if (wish.getUser().getName() == userId) product.setWishState(1);
-
-            });
-        });
-        return categoryProducts;
+    public Page<Product> categoryProduct(Pageable pageable, long categoryId) {
+        for (Product product : productRepository.findAll(pageable)) {
+            if (product.getCategory().getCategoryId() == categoryId) return (Page<Product>) product;
+        }
+        return null;
     }
 
+
     @Transactional
-    public ProductDto getProductDto(long productId, String userid) {
+    public void getProductDto(long productId, String userName) {
         ProductDto productDto = new ProductDto();
         productDto.setId(productId);
 
-        Product product = productRepository.findById(productId).get();
+        Product product = productRepository.findById(productId).orElse(null);
 
-        productDto.setText(product.getText());
-        productDto.setTitle(product.getTitle());
-        productDto.setUploadDate(product.getUploadDate());
-        productDto.setWishState(product.getWishState());
-        productDto.setWishCount(product.getWishList().size());
-        product.getWishList().forEach(wish -> {
-            if(wish.getUser().getName() == userid) productDto.setWishState(1);
-        });
+        try {
+            productDto.setText(product.getText());
+            productDto.setTitle(product.getTitle());
+            productDto.setUploadDate(product.getUploadDate());
+            productDto.setWish(product.isWish());
+            productDto.setWishCount(product.getWishList().size());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+        for (Wish wish : product.getWishList()) {
+            if (wish.getUser().getName().equals(userName)) productDto.setWish(true);
+        }
 
-        User user = userRepository.findById(product.getUser().getId()).get();
+        User user = userRepository.findById(product.getUser().getId()).orElse(null);
         productDto.setUploadUser(user);
-        return productDto;
     }
+
 }

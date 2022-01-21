@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @RequiredArgsConstructor
-@Builder
 public class ProductDto {
 
     private long id;
@@ -20,6 +19,6 @@ public class ProductDto {
     private LocalDateTime uploadDate;
     private User uploadUser;
     private long wishCount;
-    private long wishState;
+    private boolean isWish;
 
 }
