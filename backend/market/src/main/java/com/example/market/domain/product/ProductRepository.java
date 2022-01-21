@@ -10,15 +10,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-//    @Modifying
-//    @Query(value = "SELECT * FROM product WHERE product_title LIKE '%keyword%' ORDER BY upload_date DESC", nativeQuery = true)
-//    Page<Product> search(String userId, String keyword, Pageable pageable);
-//
-//    @Modifying
-//    @Query(value = "SELECT * FROM product ORDER BY upload_date DESC", nativeQuery = true)
-//    Page<Product> productList(String userId, Pageable pageable);
-//
-//    @Modifying
-//    @Query(value = "SELECT * FROM product WHERE category_id = :categoryId ORDER BY upload_date DESC", nativeQuery = true)
-//    Page<Product> categoryProduct(long categoryId, String userId, Pageable pageable);
+    @Query(value = "SELECT * FROM product WHERE product_title LIKE '%keyword%' ORDER BY upload_date DESC", nativeQuery = true)
+    Page<Product> search(String keyword, Pageable pageable, long resultCount);
+
+    @Query(value = "SELECT * FROM product ORDER BY upload_date DESC", nativeQuery = true)
+    Page<Product> productList(Pageable pageable);
+
+    @Query(value = "SELECT * FROM product WHERE category_id = :categoryId ORDER BY upload_date DESC", nativeQuery = true)
+    Page<Product> categoryProduct(long categoryId, Pageable pageable, long resultCount);
+
+    @Query(value = "SELECT count(*) FROM product WHERE category_id = :categoryId", nativeQuery = true)
+    Long categoryProductCount(long categoryId);
+
+    @Query(value = "SELECT count(*) FROM product WHERE product_title LIKE '%keyword%'", nativeQuery = true)
+    Long searchCount(String keyword);
 }

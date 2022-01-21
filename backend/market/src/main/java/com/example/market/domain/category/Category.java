@@ -1,6 +1,7 @@
 package com.example.market.domain.category;
 
 import com.example.market.domain.product.Product;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,17 +19,17 @@ public class Category {
     @Id
     @GeneratedValue
     private long categoryId;
-//
-//    private String categoryName;
-//    private long parentId;
-//
-//
-//    @OneToMany(mappedBy = "category")
-//    private List<Product> productList;
-//
-//    public Category(long categoryId, String categoryName, Long parentId) {
-//        this.categoryId = categoryId;
-//        this.categoryName = categoryName;
-//        this.parentId = parentId;
-//    }
+
+    private String categoryName;
+    private long parentId;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> productList;
+
+    @Builder
+    public Category(long categoryId, String categoryName, Long parentId ) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.parentId = parentId;
+    }
 }
