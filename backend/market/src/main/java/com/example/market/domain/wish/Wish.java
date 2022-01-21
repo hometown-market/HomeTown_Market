@@ -9,12 +9,12 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
 @Getter
 @Table(name = "wish", uniqueConstraints = {
         @UniqueConstraint(name = "wishing", columnNames = {"product_id", "user_id"})
 })
 @RequiredArgsConstructor
+@Entity
 public class Wish {
 
     @Id

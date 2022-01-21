@@ -1,9 +1,22 @@
-
 spring:
   security:
     user:
       name: user
       password: 1234
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 620088788781-s6kjlbtif0o8b56ocu0ubu1b0k82otvb.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+          facebook:
+            client-id: 674000320437819
+            client-secret:
+
+
   datasource:
     username: home
     password: 1234
@@ -23,4 +36,6 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
+
+
 

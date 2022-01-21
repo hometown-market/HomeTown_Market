@@ -2,13 +2,13 @@
   <div class='modal'>
     <div class='overlay'>
       <div class="modal-card">
-        <div class="close-modal" @click="$emit('close-modal')"><img src="@/assets/btn_close.svg"/></div>
+        <div class="close-modal" @click="$emit('close-modal')"><img src="@/assets/icons/icon-close-bk.svg"/></div>
         <div class="title">우동마켓</div>
         <div id="btn-group" class="btn-list">
           <button class="btn-style">구글로 시작하기</button>
           <button class="btn-style">네이버로 시작하기</button>
           <button class="btn-style">페이스북으로 시작하기</button>
-          <button class="btn-style" v-on:click="login">우동마켓으로 시작하기</button>
+          <button class="btn-style last" v-on:click="login">우동마켓으로 시작하기</button>
         </div>
       </div>
     </div>
@@ -39,24 +39,18 @@ export default {
   top: 0;
 }
 .overlay {
-  opacity: 0.5;
-  background-color: black;
+  background-color: rgb(0, 0, 0, 0.5);
 }
 .modal-card {
   position: relative;
   max-width: 420px;
   margin: auto;
   margin-top: 50px;
-  padding: 20px;
+  padding: 20px 20px 50px 20px;
   background-color: white;
   z-index: 10;
   opacity: 1;
   border-radius: 20px;
-}
-@media screen and (max-width: 460px) {
-  .modal-card {
-    margin: 50px 10px 0 10px;
-  }
 }
 .btn-list {
   display: flex;
@@ -64,11 +58,9 @@ export default {
   align-items: center;
 }
 .btn-style {
-  margin: 7px 0;
+  margin: 7px 12px;
   background-color: white;
-  min-width: 250px;
-  max-width: 400px;
-  width: 100%;
+  width: 85%;
   padding: 14px;
   border-radius: 20px;
   border: white;
@@ -89,5 +81,10 @@ export default {
   width: 100%;
   height: 50px;
   z-index: 19;
+}
+@media screen and (max-width: 460px) {
+  .modal-card {
+    margin: 50px 10px 0 10px;
+  }
 }
 </style>
