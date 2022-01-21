@@ -1,6 +1,7 @@
 package com.example.market.global.security.util;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,8 +21,16 @@ public class JwtTokenUtil {
     private final String secret = "market";
 
     //retrieve username from jwt token
-    public String getUsernameFromToken(String token) {
+    public String getSubjectFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);
+    }
+
+    public String getKeyFromToken(String token, String key) {
+        return (String) getAllClaimsFromToken(token).get(key);
+    }
+
+    public String getEmailFromToken(String token) {
+        return getKeyFromToken(token, "email");
     }
 
     //retrieve expiration date from jwt token
@@ -31,6 +40,7 @@ public class JwtTokenUtil {
 
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = getAllClaimsFromToken(token);
+
         return claimsResolver.apply(claims);
     }
 
@@ -48,12 +58,18 @@ public class JwtTokenUtil {
     //generate token for user
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("email", userDetails.getUsername());
         return doGenerateToken(claims, userDetails.getUsername());
     }
 
     public String generateToken(Map<String, Object> claims, UserDetails userDetails) {
         return doGenerateToken(claims, userDetails.getUsername());
     }
+
+    public String generateToken(Map<String, Object> claims) {
+        return doGenerateToken(claims);
+    }
+
 
     //while creating the token -
     //1. Define  claims of the token, like Issuer, Expiration, Subject, and the ID
@@ -67,9 +83,20 @@ public class JwtTokenUtil {
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
+    private String doGenerateToken(Map<String, Object> claims) {
+
+        JwtBuilder builder = Jwts.builder();
+        builder.setClaims(claims);
+        builder.setSubject((String) claims.get("sub"));
+        builder.setIssuedAt(new Date(System.currentTimeMillis()));
+        builder.setExpiration(new Date(System.currentTimeMillis() + JWT_TOKEN_VALIDITY * 1000));
+        builder.signWith(SignatureAlgorithm.HS512, secret);
+        return builder.compact();
+    }
+
     //validate token
     public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(token);
+        final String username = getEmailFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 }

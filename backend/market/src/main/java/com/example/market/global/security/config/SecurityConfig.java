@@ -1,8 +1,10 @@
 package com.example.market.global.security.config;
 
+import com.example.market.domain.user.service.OAuthService;
 import com.example.market.domain.user.service.UserDetailsServiceImpl;
 import com.example.market.global.security.filter.JwtAuthenticationFilter;
 import com.example.market.global.security.filter.JwtAuthorizeFilter;
+import com.example.market.global.security.handler.OAuth2LoginSuccessHandler;
 import com.example.market.global.security.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,8 +25,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsServiceImpl userDetailsService;
-
+    private final OAuthService oAuthService;
     private final JwtTokenUtil jwtTokenUtil;
+    private final OAuth2LoginSuccessHandler OAuth2LoginSuccessHandler;
 
 
     @Bean
@@ -53,8 +56,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests().antMatchers("/join").permitAll().
-                anyRequest().permitAll();
+                .authorizeRequests().antMatchers("/join").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/test").authenticated();
+
+
+        http.oauth2Login()
+                .successHandler(OAuth2LoginSuccessHandler)
+                .loginPage("/login")
+                .authorizationEndpoint()
+                .baseUri("/login/google/")
+                .and()
+                .userInfoEndpoint()
+                .userService(oAuthService);
+
+
+
 
 
         http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(),jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);

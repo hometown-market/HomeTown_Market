@@ -28,7 +28,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final AuthenticationManager authenticationManager;
     private final JwtTokenUtil jwtTokenUtil;
 
+
     @Override
+
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
         ObjectMapper om = new ObjectMapper();
@@ -59,8 +61,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 
         String jwtToken = jwtTokenUtil.generateToken(user);
-
-
         response.addHeader("Authorization", "Bearer " + jwtToken);
 
 
