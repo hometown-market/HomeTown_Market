@@ -24,10 +24,6 @@ public class JwtAuthorizeFilter extends OncePerRequestFilter {
 
     private final JwtTokenUtil jwtTokenUtil;
     private final UserDetailsServiceImpl userDetailsService;
-    private String username = null;
-    private String jwtToken = null;
-
-
 
 
     @Override
@@ -37,10 +33,12 @@ public class JwtAuthorizeFilter extends OncePerRequestFilter {
         log.info("JwtAuthorizeFilter.doFilterInternal JWT 요청 검증");
         String requestHeader = request.getHeader("authorization");
 
+        String jwtToken = null;
+        String username = null;
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
             jwtToken = requestHeader.substring(7);
 
-            username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+            username = jwtTokenUtil.getEmailFromToken(jwtToken);
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

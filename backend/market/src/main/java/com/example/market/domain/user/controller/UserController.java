@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
+
     private final UserService userService;
 
     @PostMapping("/join")
@@ -26,8 +27,13 @@ public class UserController {
         return "ok";
     }
 
-    @GetMapping("test")
+    @GetMapping("/test")
     public String test() {
         return "ok";
+    }
+
+    @GetMapping("/login")
+    public String loginGet() {
+        return "login page";
     }
 }

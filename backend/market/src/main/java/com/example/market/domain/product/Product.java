@@ -22,6 +22,8 @@ public class Product {
     private long id;
 
     private String title;
+
+    @Column(name = "upload_date")
     private LocalDateTime uploadDate;
     private long views; //조회수
     private String productImgUrl;

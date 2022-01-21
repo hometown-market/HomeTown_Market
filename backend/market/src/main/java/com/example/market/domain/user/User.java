@@ -21,13 +21,17 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Builder
-    public User(String email, String password, String name, String role, String address) {
+    public User(String email, String password, String name, String profileImgUrl, String role, String address, String provider, String phone) {
         this.email = email;
         this.password = password;
         this.name = name;
+        this.profileImgUrl = profileImgUrl;
         this.role = role;
         this.address = address;
+        this.provider = provider;
+        this.phone = phone;
     }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -83,6 +87,8 @@ public class User implements UserDetails {
     private String profileImgUrl;
     private String role;
     private String address;
+    private String provider;
+    private String phone;
 
     @OneToMany(mappedBy = "user")
     private List<Product> productList;

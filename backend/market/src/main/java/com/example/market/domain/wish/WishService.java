@@ -1,12 +1,7 @@
 package com.example.market.domain.wish;
 
-import com.example.market.domain.product.Product;
-import com.example.market.domain.product.ProductRepository;
-import com.example.market.domain.user.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
