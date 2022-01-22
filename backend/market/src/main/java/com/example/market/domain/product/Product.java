@@ -34,7 +34,6 @@ public class Product {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
-
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"productList"})
     private User user;
