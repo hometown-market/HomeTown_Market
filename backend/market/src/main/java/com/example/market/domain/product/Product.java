@@ -6,6 +6,7 @@ import com.example.market.domain.wish.Wish;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@RequiredArgsConstructor
 public class Product {
 
     @Id
@@ -37,9 +39,6 @@ public class Product {
 
     @Transient
     private long wishCount; //찜수
-
-    public Product() {
-    }
 
     public void setWishCount(long wishCount) {
         this.wishCount = wishCount;
