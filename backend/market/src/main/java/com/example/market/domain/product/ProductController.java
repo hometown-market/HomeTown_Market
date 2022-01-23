@@ -22,11 +22,11 @@ public class ProductController {
     }
 
     @GetMapping("/api/product_list")
-    public Page<Product> productList(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable, Authentication authentication) {
-        return productService.productList(pageable, authentication.getName());
+    public Page<Product> productList(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable) {
+        return productService.productList(pageable);
     }
 
-    @GetMapping("/api/product_list/{keyword}")
+    @GetMapping("/api/search/products")
     public Page<Product> search(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam String keyword) {
         return productService.search(keyword, pageable);
     }
@@ -37,7 +37,8 @@ public class ProductController {
     }
 
     @GetMapping("/product/{productId}")
-    public void productDetail(Authentication authentication, @PathVariable long productId) {
-        productService.getProductDto(productId, authentication.getName());
+    public ProductDto productDetail(Authentication authentication, @PathVariable long productId) {
+        ProductDto productDto = productService.getProductDto(productId);
+        return productDto;
     }
 }
