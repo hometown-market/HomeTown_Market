@@ -28,7 +28,9 @@ public class InitData {
             Product product = Product.builder()
                     .title("prduct " + Integer.toString(i))
                     .price(i)
-                    .text("prduct " + Integer.toString(i)).build();
+                    .text("prduct " + Integer.toString(i))
+                    .productImgUrl("https://media.bunjang.co.kr/product/176911291_1_1642914208_w292.jpg")
+                    .build();
             productRepository.save(product);
         }
 
