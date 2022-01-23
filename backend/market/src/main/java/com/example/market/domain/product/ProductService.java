@@ -39,16 +39,19 @@ public class ProductService {
 
 
     public ProductDto getProductDto(long productId) {
-        ProductDto productDto = new ProductDto();
-        productDto.setId(productId);
 
         Product product = productRepository.findById(productId).orElse(null);
+        ProductDto productDto = ProductDto.builder()
+                .id(product.getId())
+                .text(product.getText())
+                .title(product.getTitle())
+                .uploadDate(product.getUploadDate())
+                .uploadUser(product.getUser())
+                .wishCount(product.getWishCount())
+                .productImgUrl(product.getProductImgUrl())
+                .price(product.getPrice())
+                .build();
 
-        productDto.setText(product.getText());
-        productDto.setTitle(product.getTitle());
-        productDto.setUploadDate(product.getUploadDate());
-        productDto.setWish(product.isWish());
-        productDto.setWishCount(product.getWishList().size());
 
         return productDto;
     }

@@ -30,6 +30,8 @@ public class Product {
     private String text; //제품 상세
     private long price;
     private boolean locateAuthorization;
+    @Transient
+    private long wishCount; //찜수
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,8 +42,6 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @Transient
-    private long wishCount; //찜수
     private boolean isWish;
 
 
