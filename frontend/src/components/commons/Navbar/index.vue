@@ -1,10 +1,10 @@
 <template>
   <div class="navbar">
     <nav>
-      <ul>
+      <ul class="category-container">
         <li v-for="(mainItem, mainIndex) in categories" :key="mainIndex">
           <div class="main-category">
-            <hm-ui-icon name="icon-angle-down-bk" @icon-click="onClicCollapseIcon('main', mainIndex)" />
+            <hm-ui-icon name="icon-angle-down-bk" class="main-icon" @icon-click="onClicCollapseIcon('main', mainIndex)" />
             <div @click.prevent="onClickCategoryItem(mainItem.categoryId)">
               {{ mainItem.label }}
             </div>
@@ -12,7 +12,7 @@
           <ul :class="['middle-categories', { active: mainActiveList[mainIndex]}]">
             <li v-for="(middleItem, middleIndex) in mainItem.subcategories" :key="middleIndex">
               <div class="middle-category">
-                <hm-ui-icon name="icon-angle-down-bk" size="16" @icon-click="onClicCollapseIcon('middle', mainsIndex, middleIndex)" />
+                <hm-ui-icon name="icon-angle-down-bk" class="middle-icon" size="16" @icon-click="onClicCollapseIcon('middle', mainsIndex, middleIndex)" />
                 <div @click.prevent="onClickCategoryItem(middleItem.categoryId)">
                   {{ middleItem.label }}
                 </div>
@@ -113,8 +113,22 @@ export default {
     z-index: 9;
     box-sizing: border-box;
 
+    .category-container {
+      > li {
+        margin-bottom: 17px;
+      }
+    }
+
     .main-category {
       display: flex;
+      line-height: 25px;
+      font-size: 17px;
+      margin-bottom: 19px;
+
+      .main-icon {
+        margin-right: 8px;
+      }
+
     }
 
     .middle-categories {
@@ -127,10 +141,22 @@ export default {
 
     .middle-category {
       display: flex;
+      font-size: 14px;
+      line-height: 16px;
+      margin-bottom: 10px;
+
+      .middle-icon {
+        margin-right: 2px;
+      }
     }
 
     .subcategories {
       margin-left: 16px;
+    }
+
+    .subcategory {
+      font-size: 12px;
+      margin-bottom: 10px;
     }
   }
 

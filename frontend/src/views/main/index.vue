@@ -18,7 +18,8 @@
 </template>
 <script>
 import ProductList from '@/components/product-list'
-import { Rest, RestUrl } from '@/modules/Rest.js'
+// import { Rest, RestUrl } from '@/modules/Rest.js'
+import productListData from '@/assets/productList.json/'
 
 export default {
   name: 'Main',
@@ -48,9 +49,10 @@ export default {
     },
     async fetchProductList () {
       try {
-        const response = await Rest.get(RestUrl.ProductList)
-        this.productList = response.data.content
-        this.total = response.data.totalElements
+        // const response = await Rest.get(RestUrl.ProductList)
+        // this.productList = response.data.content
+        // this.total = response.data.totalElements
+        this.productList = productListData
       } catch (error) {
         console.log(error)
         alert(error)
@@ -73,6 +75,7 @@ export default {
       text-align: center;
       font-size: 18px;
       font-weight: normal;
+      margin: 31px 0;
     }
   }
 }

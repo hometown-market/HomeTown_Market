@@ -113,6 +113,7 @@ export default {
         border-radius: 11px;
         align-items: center;
         margin-bottom: 8px;
+        color: #797979;
       }
 
       .empty-item {

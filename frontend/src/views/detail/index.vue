@@ -8,8 +8,8 @@
     </div>
     <div class="info-container">
       <div class="top-container">
-        <p>{{ productInfo.title }}</p>
-        <p>{{ productInfo.price }}원</p>
+        <p class="product-title">{{ productInfo.title }}</p>
+        <p class="product-price">{{ numberWithCommas(productInfo.price) }}원</p>
         <div class="icon-container">
           <div class="like-container">
             <hm-ui-icon name="icon-like-g"/> 0
@@ -30,7 +30,8 @@
   </div>
 </template>
 <script>
-import { Rest, RestUrl } from '@/modules/Rest.js'
+// import { Rest, RestUrl } from '@/modules/Rest.js'
+import productData from '@/assets/product.json'
 
 export default {
   name: 'Detail',
@@ -70,12 +71,17 @@ export default {
     },
     async fetchProductInfo () {
       try {
-        const response = await Rest.get(`${RestUrl.ProductDetail}` + `${this.productId}`)
-        this.productInfo = response.data
+        // const response = await Rest.get(`${RestUrl.ProductDetail}` + `${this.productId}`)
+        // this.productInfo = response.data
+        this.productInfo = productData
+        console.log(this.productInfo)
       } catch (error) {
         console.log(error)
         alert(error)
       }
+    },
+    numberWithCommas (x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
   }
 }
@@ -108,6 +114,15 @@ export default {
       position: relative;
       padding-bottom: 20px;
       border-bottom: 1px solid #C4C4C4;
+
+      .product-title {
+        font-size: 18px;
+        margin-bottom: 6px;
+      }
+
+      .product-price {
+        font-size: 23px;
+      }
       .icon-container {
         display: flex;
         width: 120px;
@@ -142,6 +157,7 @@ export default {
 
     .bottom-container {
       padding-top: 25px;
+      line-height: 22px;
     }
   }
 }
