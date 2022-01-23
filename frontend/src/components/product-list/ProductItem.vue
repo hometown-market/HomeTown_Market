@@ -1,10 +1,10 @@
 <template>
   <div class="product-item" @click.prevent="onClickItem">
-    <div class="image-container" :style="'background-image: url('+ data.product_img+')'">
+    <div class="image-container" :style="'background-image: url('+ data.productImgUrl+')'">
     </div>
     <div class="info-container">
-      <p class="product-title">{{ data.product_title}}</p>
-      <p class="product_price">{{ data.product_price }}원</p>
+      <p class="product-title">{{ data.title}}</p>
+      <p class="product_price">{{ data.price }}원</p>
       <span class="time">10초 전</span>
       <div class="icon-container">
         <div class="left-container">
@@ -37,8 +37,8 @@ export default {
     onClickItem () {
       this.$router.push({
         name: 'detail',
-        query: {
-          product_id: this.data.product_id
+        params: {
+          productId: this.data.id
         }
       })
     },

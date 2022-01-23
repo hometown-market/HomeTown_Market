@@ -47,7 +47,7 @@ const routes = [
       {
         // 상품 상세 화면
         name: 'detail',
-        path: '/detail',
+        path: '/detail/:productId',
         component: Detail
       },
       {

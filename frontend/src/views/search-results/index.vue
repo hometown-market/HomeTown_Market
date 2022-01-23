@@ -14,6 +14,7 @@
 </template>
 <script>
 import ProductList from '@/components/product-list'
+import { Rest, RestUrl } from '@/modules/Rest.js'
 
 export default {
   name: 'SearchResults',
@@ -61,71 +62,15 @@ export default {
     onClickInput () {
       this.onFocusInput()
     },
-    fetchProductList () {
-      // axios get product_list?recent_type=99&uid=00000000000&order=date
-      this.total = 30
-      this.productList = [
-        {
-          product_id: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/175067065_1_1641306224_w354.jpg',
-          product_title: this.keyword + '상품 이름 1',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          product_id: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/175067065_1_1641306224_w354.jpg',
-          product_title: this.keyword + '상품 이름 2',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          product_id: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/175067065_1_1641306224_w354.jpg',
-          product_title: this.keyword + '상품 이름 3',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          product_id: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/175067065_1_1641306224_w354.jpg',
-          product_title: this.keyword + '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          product_id: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/103269118_1_1626911735_w354.jpg',
-          product_title: this.keyword + '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          product_id: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/103269118_1_1626911735_w354.jpg',
-          product_title: this.keyword + '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        }
-      ]
+    async fetchProductList () {
+      try {
+        const response = await Rest.get(`${RestUrl.SearchProductList}` + `?keyword=${this.keyword}&page=0`)
+        this.productList = response.data.content
+        this.total = response.data.totalElements
+      } catch (error) {
+        console.log(error)
+        alert(error)
+      }
     }
   }
 }
