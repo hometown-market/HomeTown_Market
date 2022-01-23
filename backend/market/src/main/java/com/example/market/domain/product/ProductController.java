@@ -26,8 +26,8 @@ public class ProductController {
         return productService.productList(pageable, authentication.getName());
     }
 
-    @GetMapping("/api/product_list/{keyword}")
-    public Page<Product> search(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable String keyword) {
+    @GetMapping("/api/search/products")
+    public Page<Product> search(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam String keyword) {
         return productService.search(keyword, pageable);
     }
 

@@ -18,12 +18,10 @@ public class ProductService {
     private final UserRepository userRepository;
 
 
-    @Transactional
     public Page<Product> search(String keyword, Pageable pageable) {
-        return productRepository.findByTitle(keyword, pageable);
+        return productRepository.findByTitleContainsOrderByUploadDateDesc(keyword, pageable);
     }
 
-    @Transactional
     public Page<Product> productList(Pageable pageable, String userName) {
         Page<Product> products = productRepository.findAll(pageable);
         for (Product product : products) {
@@ -35,7 +33,6 @@ public class ProductService {
         return products;
     }
 
-    @Transactional
     public Page<Product> categoryProduct(Pageable pageable, long categoryId) {
         for (Product product : productRepository.findAll(pageable)) {
             if (product.getCategory().getCategoryId() == categoryId) return (Page<Product>) product;
@@ -44,7 +41,6 @@ public class ProductService {
     }
 
 
-    @Transactional
     public ProductDto getProductDto(long productId) {
         ProductDto productDto = new ProductDto();
         productDto.setId(productId);
