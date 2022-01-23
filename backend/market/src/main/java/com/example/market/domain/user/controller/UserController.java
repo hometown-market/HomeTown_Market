@@ -22,7 +22,7 @@ public class UserController {
         return null;
     }
 
-    @PostMapping("/login")
+    @PostMapping("/login/")
     public String login() {
         return "ok";
     }
@@ -32,7 +32,7 @@ public class UserController {
         return "ok";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/api/v1/login")
     public String loginGet() {
         return "login page";
     }

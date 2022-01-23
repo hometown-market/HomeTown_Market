@@ -23,7 +23,6 @@ public class Product {
     private long id;
 
     private String title;
-
     @Column(name = "upload_date")
     private LocalDateTime uploadDate;
     private long views; //조회수
@@ -37,19 +36,23 @@ public class Product {
     @JoinColumn(name = "user_id")
     @JsonIgnoreProperties({"productList"})
     private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @Transient
     private long wishCount; //찜수
+    private boolean isWish;
 
-    public void setWishCount(long wishCount) {
-        this.wishCount = wishCount;
-    }
 
     @OneToMany(mappedBy = "product")
     @JsonIgnoreProperties({"product"})
     private List<Wish> wishList;
 
-    private boolean isWish;
+
+    public void setWishCount(long wishCount) {
+        this.wishCount = wishCount;
+    }
 
     public void setIsWish(boolean isWish) {
         this.isWish = isWish;
@@ -70,9 +73,5 @@ public class Product {
         this.user = user;
         this.locateAuthorization = locateAuthorization;
     }
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
-    private Category category;
 
 }
