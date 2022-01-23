@@ -17,7 +17,7 @@ export default new Vuex.Store({
     // 로그인 시도
     login (loginObj) {
       axios
-        .post('https://reqres.in/api/login', loginObj)
+        .post('https://reqres.in/api/v1/login', loginObj)
         .then(res => {
           const token = res.data.token
           console.log(token)
@@ -32,7 +32,7 @@ export default new Vuex.Store({
     // 이메일 중복체크
     emailCheck (email) {
       axios
-        .post('http://localhost:8008/signup', email)
+        .post('http://localhost:8080/api/v1/emailcheck', email)
         .then((res) => {
           console.log(res)
           alert('사용 가능한 이메일 입니다.')
@@ -45,12 +45,12 @@ export default new Vuex.Store({
     // 회원가입 시도
     signup (signupObj) {
       axios
-        .post('http://localhost:8008/signup', signupObj)
+        .post('http://localhost:8080/api/v1/signup', signupObj)
         .then(res => {
           const token = res.data.token
           console.log(token)
           localStorage.setItem('access_token', token)
-          this.$router.go(-1)
+          this.$router.go(-2)
         })
         .catch((err) => {
           console.log(err)

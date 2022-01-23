@@ -5,9 +5,9 @@
         <div class="close-modal" @click="$emit('close-modal')"><img src="@/assets/icons/icon-close-bk.svg"/></div>
         <div class="title">우동마켓</div>
         <div id="btn-group" class="btn-list">
-          <button class="btn-style">구글로 시작하기</button>
-          <button class="btn-style">네이버로 시작하기</button>
-          <button class="btn-style">페이스북으로 시작하기</button>
+          <button class="btn-style" href="http://15.165.216.62:8080/api/oauth/google">구글로 시작하기</button>
+          <button class="btn-style" href="http://15.165.216.62:8080/api/oauth/naver">네이버로 시작하기</button>
+          <button class="btn-style" href="http://15.165.216.62:8080/api/oauth/facebook">페이스북으로 시작하기</button>
           <button class="btn-style last" v-on:click="login">우동마켓으로 시작하기</button>
         </div>
       </div>
