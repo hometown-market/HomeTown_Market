@@ -2,10 +2,10 @@
   <div class="container">
     <form @submit.prevent="formSubmit" class="login-form">
       <p class="text-login">환영합니다!<br/>회원 서비스 이용을 위해<br/>로그인 해주세요</p>
-      <input v-model="id" class="input-login" type='text' placeholder="아이디">
+      <input v-model="email" class="input-login" type='text' placeholder="아이디">
       <input v-model="password" class="input-login" type='password' placeholder="비밀번호">
       <div class="link-signup" v-on:click="signup">회원가입</div>
-      <button class="btn-login" type="submit">로그인하기</button>
+      <button class="btn-login">로그인하기</button>
     </form>
   </div>
 </template>
@@ -14,8 +14,9 @@
 export default {
   data () {
     return {
-      id: '',
-      password: ''
+      email: '',
+      password: '',
+      loginObj: [this.email, this.password]
     }
   },
   methods: {
@@ -25,6 +26,7 @@ export default {
           alert('아이디와 비밀번호를 입력해 주세요')
         } else if (this.id !== '' && this.password !== '') {
           alert('통과')
+          this.$store.dispatch('login', this.loginObj)
           // vuex의 action에 등록되어있는 axios 비동기 통신연결
         }
       }
