@@ -18,6 +18,8 @@
       @like-icon-click="onClickLikeIcon"
       @search-icon-click="onClickReadonly"
     />
+    <hm-ui-text label="우리동네 간단설명 텍스트"></hm-ui-text>
+    <hm-ui-user-input></hm-ui-user-input>
   </div>
 </template>
 <script>
@@ -51,10 +53,14 @@ export default {
     }
   }
 }
+// window.onload = function () {
+//   var target = document.querySelector('.user-input')
+//   target.setAttribute('placeholder', '아이디를 입력해주세요.')
+//   // target.setAttribute('type', 'password')
+//   target.setAttribute('type', 'text')
+// }
 </script>
 
 <style lang="scss">
-.main-container {
-}
 
 </style>
