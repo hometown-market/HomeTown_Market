@@ -1,7 +1,7 @@
 <template>
   <div class="product-list">
     <div class="top-container" v-if="type === 'nomal'">
-      <div>{{ total }}개</div>
+      <div>{{ numberWithCommas(total) }}개</div>
       <hm-ui-select v-model="selected" @update="(value) => selected = value"></hm-ui-select>
     </div>
     <div class="list-container">
@@ -47,6 +47,11 @@ export default {
     return {
       selected: 'date'
     }
+  },
+  methods: {
+    numberWithCommas (x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    }
   }
 }
 </script>
@@ -60,6 +65,8 @@ export default {
     display: flex;
     justify-content: space-between;
     margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: bold;
   }
   .list-container {
     display: grid;
