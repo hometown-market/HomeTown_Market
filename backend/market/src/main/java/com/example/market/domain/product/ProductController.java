@@ -22,8 +22,8 @@ public class ProductController {
     }
 
     @GetMapping("/api/product_list")
-    public Page<Product> productList(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable, Authentication authentication) {
-        return productService.productList(pageable, authentication.getName());
+    public Page<Product> productList(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable) {
+        return productService.productList(pageable);
     }
 
     @GetMapping("/api/search/products")

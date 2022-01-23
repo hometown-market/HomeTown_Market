@@ -1,13 +1,10 @@
 package com.example.market.domain.product;
 
-import com.example.market.domain.user.User;
 import com.example.market.domain.user.repository.UserRepository;
-import com.example.market.domain.wish.Wish;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -22,14 +19,14 @@ public class ProductService {
         return productRepository.findByTitleContainsOrderByUploadDateDesc(keyword, pageable);
     }
 
-    public Page<Product> productList(Pageable pageable, String userName) {
+    public Page<Product> productList(Pageable pageable) {
         Page<Product> products = productRepository.findAll(pageable);
-        for (Product product : products) {
-            product.setWishCount(product.getWishList().size());
-            product.getWishList().forEach(wish -> {
-                if (wish.getUser().getName().equals(userName)) product.setIsWish(true);
-            });
-        }
+//        for (Product product : products) {
+//            product.setWishCount(product.getWishList().size());
+//            product.getWishList().forEach(wish -> {
+//                if (wish.getUser().getName().equals(userName)) product.setIsWish(true);
+//            });
+//        }
         return products;
     }
 
