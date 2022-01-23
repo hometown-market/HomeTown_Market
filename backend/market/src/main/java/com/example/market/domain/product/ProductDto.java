@@ -1,16 +1,15 @@
 package com.example.market.domain.product;
 
 import com.example.market.domain.user.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ProductDto {
 
     private long id;
@@ -20,5 +19,8 @@ public class ProductDto {
     private User uploadUser;
     private long wishCount;
     private boolean isWish;
+    private long views; //조회수
+    private String productImgUrl;
+    private long price;
 
 }
