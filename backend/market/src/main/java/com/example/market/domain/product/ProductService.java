@@ -45,27 +45,19 @@ public class ProductService {
 
 
     @Transactional
-    public void getProductDto(long productId, String userName) {
+    public ProductDto getProductDto(long productId) {
         ProductDto productDto = new ProductDto();
         productDto.setId(productId);
 
         Product product = productRepository.findById(productId).orElse(null);
 
-        try {
-            productDto.setText(product.getText());
-            productDto.setTitle(product.getTitle());
-            productDto.setUploadDate(product.getUploadDate());
-            productDto.setWish(product.isWish());
-            productDto.setWishCount(product.getWishList().size());
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        for (Wish wish : product.getWishList()) {
-            if (wish.getUser().getName().equals(userName)) productDto.setWish(true);
-        }
+        productDto.setText(product.getText());
+        productDto.setTitle(product.getTitle());
+        productDto.setUploadDate(product.getUploadDate());
+        productDto.setWish(product.isWish());
+        productDto.setWishCount(product.getWishList().size());
 
-        User user = userRepository.findById(product.getUser().getId()).orElse(null);
-        productDto.setUploadUser(user);
+        return productDto;
     }
 
 }
