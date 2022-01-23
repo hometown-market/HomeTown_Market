@@ -9,6 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +36,20 @@ public class ProductService {
             });
         }
         return products;
+    }
+
+    @Transactional
+    public long productCount() {
+        return productRepository.findAll().size();
+    }
+
+    @Transactional
+    public long categoryProductCount(long categoryId) {
+        List<Product> categoryProduct = new ArrayList<>();
+        for(Product product : productRepository.findAll()) {
+            if(product.getCategory().getCategoryId() == categoryId) categoryProduct.add(product);
+        }
+        return categoryProduct.size();
     }
 
     @Transactional
