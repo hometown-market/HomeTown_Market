@@ -1,10 +1,11 @@
 <template>
   <div class="hm-user-input">
     <input
-      :class="[ 'hm-input-test', placeholder, type, {error: error} ]"
+      :class="[ 'hm-input-test', {error: error} ]"
       v-model="$value"
       :placeholder="placeholder"
       :type="type"
+      :readonly="readonly"
     >
     <hm-ui-text :label="errorMessage" size="w100"></hm-ui-text>
   </div>
@@ -33,6 +34,10 @@ export default {
     errorMessage: {
       type: String,
       default: ''
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

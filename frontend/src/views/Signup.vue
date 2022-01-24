@@ -74,7 +74,7 @@
 <script>
 import Vue from 'vue'
 import SimpleVueValidator from 'simple-vue-validator'
-import axios from 'axios'
+import { Rest, RestUrl } from '@/modules/Rest.js'
 const Validator = SimpleVueValidator.Validator
 
 Vue.use(SimpleVueValidator)
@@ -131,13 +131,12 @@ export default {
     },
     async onSubmit0 () {
       const success = await this.$validate('email')
+      const response = await Rest.post(RestUrl.emailCheck, this.email)
       if (success) {
-        axios
-          .post('http://15.165.216.62:8080/api/emailCheck', this.email)
+        response
           .then((res) => {
             if (res.data.status === true) {
-              // 해당 주석은 api 테스트 완료 이후 제거
-              // this.step = (this.step + 1)
+              this.step = (this.step + 1)
             } else if (res.data.status === false) {
               this.error.hasError = true
               this.error.message = '사용 불가능한 이메일 입니다.'
