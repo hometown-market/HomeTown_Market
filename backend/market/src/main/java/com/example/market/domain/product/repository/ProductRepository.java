@@ -1,5 +1,6 @@
 package com.example.market.domain.product.repository;
 
+import com.example.market.domain.category.Category;
 import com.example.market.domain.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,5 +19,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findByTitleContainsOrderByUploadDateDesc(String title, Pageable pageable);
 
-
+    Page<Product> findAllByCategoryOrderByUploadDate(Category category, Pageable pageable);
 }

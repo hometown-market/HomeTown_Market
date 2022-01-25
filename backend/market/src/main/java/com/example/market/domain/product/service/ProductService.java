@@ -1,6 +1,8 @@
 package com.example.market.domain.product.service;
 
 
+import com.example.market.domain.category.Category;
+import com.example.market.domain.category.CategoryRepository;
 import com.example.market.domain.product.Product;
 import com.example.market.domain.product.dto.ProductDetailsDTO;
 import com.example.market.domain.product.dto.ProductListDTO;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 public class ProductService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
 
     public Page<ProductListDTO> search(String keyword, Pageable pageable) {
         Page<Product> products = productRepository.findByTitleContainsOrderByUploadDateDesc(keyword, pageable);
@@ -34,10 +37,8 @@ public class ProductService {
     }
 
     public Page<Product> categoryProduct(Pageable pageable, long categoryId) {
-        for (Product product : productRepository.findAll(pageable)) {
-            if (product.getCategory().getCategoryId() == categoryId) return (Page<Product>) product;
-        }
-        return null;
+        Category category = categoryRepository.getById(categoryId);
+        return productRepository.findAllByCategoryOrderByUploadDate(category, pageable);
     }
 
     public ProductDetailsDTO getProductDto(long productId) {
