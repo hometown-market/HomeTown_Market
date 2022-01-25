@@ -26,7 +26,8 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Product> productList;
 
-    public Category(String categoryName, Long parentId) {
+    public Category(Long categoryId, String categoryName, Long parentId) {
+        this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.parentId = parentId;
     }
