@@ -20,6 +20,7 @@ public class Product {
     @Id
     @GeneratedValue
     @Column(name = "product_id")
+
     private long id;
 
     private String title;
@@ -28,10 +29,9 @@ public class Product {
     private long views; //조회수
     private String productImgUrl;
     private String text; //제품 상세
-    private long price;
+    private int price;
     private boolean locateAuthorization;
-    @Transient
-    private long wishCount; //찜수
+    private long wishCount;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -64,7 +64,7 @@ public class Product {
     }
 
     @Builder
-    public Product(String title, Category category, String productImgUrl, String text, long price, User user, boolean locateAuthorization) {
+    public Product(String title, Category category, String productImgUrl, String text, int price, User user, boolean locateAuthorization) {
         this.title = title;
         this.category = category;
         this.productImgUrl = productImgUrl;

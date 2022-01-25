@@ -1,5 +1,6 @@
-package com.example.market.domain.product;
+package com.example.market.domain.product.repository;
 
+import com.example.market.domain.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

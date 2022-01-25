@@ -41,7 +41,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         alect: org.hibernate.dialect.MySQL5InnoDBDialect
