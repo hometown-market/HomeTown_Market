@@ -17,18 +17,16 @@ public class Category {
 
     @Id
     @GeneratedValue
-    private Long categoryId;
+    private long categoryId;
 
     private String categoryName;
-    @Column(name = "parent_id")
-    private Long parentId;
+    private long parentId;
 
 
     @OneToMany(mappedBy = "category")
     private List<Product> productList;
 
-    public Category(Long categoryId, String categoryName, Long parentId) {
-        this.categoryId = categoryId;
+    public Category(String categoryName, Long parentId) {
         this.categoryName = categoryName;
         this.parentId = parentId;
     }

@@ -16,19 +16,32 @@ public class CategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public List<CategoryDto> categoryList(long categoryId) {
-        List<CategoryDto> categoryGroup = new ArrayList<>();
+    public CategoryDto categoryParent() {
+        Map<Long, List<CategoryDto>> categoryGroup = new HashMap<>();
         for (Category c : categoryRepository.findAll()) {
             CategoryDto categories = new CategoryDto(c.getCategoryId(), c.getCategoryName(), c.getParentId());
-            if(categories.getParentId() == categoryId) {
-                categoryGroup.add(categories);
-
-            }
+            categoryGroup.computeIfAbsent(categories.getParentId(), k -> new ArrayList<>()).add(categories);
         }
-        return categoryGroup;
 
+        CategoryDto categoryP = new CategoryDto(0L, "START", null);
+        addSubCategories(categoryP, categoryGroup);
+
+        return categoryP;
     }
+
+    private void addSubCategories(CategoryDto parent, Map<Long, List<CategoryDto>> groupingByParentId) {
+        List<CategoryDto> subCategories = groupingByParentId.get(parent.getCategoryId());
+
+        if(subCategories == null) {
+            return;
+        }
+
+        parent.setSubCategories(subCategories);
+
+        for (CategoryDto s : subCategories) {
+            addSubCategories(s, groupingByParentId);
+        }
+    }
+
+
 }
-
-
-
