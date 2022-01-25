@@ -1,16 +1,12 @@
 package com.example.market.global.config;
 
 import com.example.market.domain.product.Product;
-import com.example.market.domain.product.ProductRepository;
+import com.example.market.domain.product.repository.ProductRepository;
 import com.example.market.domain.user.User;
 import com.example.market.domain.user.repository.UserRepository;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-
-
 public class InitData {
 
     private final ProductRepository productRepository;
@@ -20,6 +16,7 @@ public class InitData {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
         initProduct();
+        initUser();
     }
 
     private void initProduct() {
@@ -41,8 +38,9 @@ public class InitData {
         for (int i = 0; i < 20; i++) {
 
             User user = User.builder()
-                    .email(Integer.toString(i) + "@gmail.com")
+                    .email(Integer.toString(i))
                     .phone("01032222222")
+                    .password("1")
                     .build();
             userRepository.save(user);
         }
