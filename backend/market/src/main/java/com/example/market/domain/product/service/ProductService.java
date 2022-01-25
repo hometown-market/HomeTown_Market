@@ -36,9 +36,10 @@ public class ProductService {
         return getProductsListDTO(products);
     }
 
-    public Page<Product> categoryProduct(Pageable pageable, long categoryId) {
+    public Page<ProductListDTO> categoryProduct(Pageable pageable, long categoryId) {
         Category category = categoryRepository.getById(categoryId);
-        return productRepository.findAllByCategoryOrderByUploadDate(category, pageable);
+        Page<Product> products = productRepository.findAllByCategoryOrderByUploadDate(category, pageable);
+        return getProductsListDTO(products);
     }
 
     public ProductDetailsDTO getProductDto(long productId) {
