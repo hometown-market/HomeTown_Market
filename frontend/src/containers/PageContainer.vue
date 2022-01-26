@@ -12,7 +12,7 @@
 <script>
 import Header from '@/components/commons/Header/index.vue'
 import Navbar from '@/components/commons/Navbar/index.vue'
-import LoginModal from '@/components/LoginModal'
+import LoginModal from '@/components/commons/LoginModal/index.vue'
 
 export default {
   name: 'PageContainer',

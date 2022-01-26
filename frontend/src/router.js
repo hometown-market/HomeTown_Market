@@ -10,6 +10,7 @@ import Search from '@/views/search/index.vue'
 import SearchResults from '@/views/search-results/index.vue'
 import Category from '@/views/category/index.vue'
 import Detail from '@/views/detail/index.vue'
+import Shop from '@/views/shop/index.vue'
 
 import Component from '@/views/component/index.vue'
 
@@ -61,6 +62,12 @@ const routes = [
         name: 'signup',
         path: '/signup',
         component: Signup
+      },
+      {
+        // 내 상점
+        name: 'shop',
+        path: '/shop',
+        component: Shop
       },
       {
         // (임시) 컴포넌트

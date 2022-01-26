@@ -22,3 +22,11 @@ body {
   padding-bottom: 40px;
   position: relative;
 }
+
+.box-grey {
+  width: 75px;
+  height: 75px;
+  background-color: #F5F5F5;
+  border-radius: 11px;
+  margin: 15px 0;
+}
