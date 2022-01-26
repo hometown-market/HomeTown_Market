@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from '@/router'
 
 Vue.use(Vuex)
 
@@ -10,7 +11,7 @@ export default new Vuex.Store({
   mutations: {
     logout () {
       localStorage.removeItem('access_token')
-      location.reload()
+      // location.reload()
     }
   },
   actions: {
@@ -22,7 +23,7 @@ export default new Vuex.Store({
           const token = res.data.token
           console.log(token)
           localStorage.setItem('access_token', token)
-          this.$router.go(-1)
+          router.go(-1)
         })
         .catch((err) => {
           console.log(err)
@@ -35,20 +36,20 @@ export default new Vuex.Store({
         .post('http://localhost:8080/api/v1/signup', signupObj)
         .then(res => {
           const token = res.data.token
-          console.log(token)
+          // console.log(token)
           localStorage.setItem('access_token', token)
-          this.$router.go(-2)
+          router.go(-2)
         })
         .catch((err) => {
           console.log(err)
           alert('회원가입에 실패하였습니다.')
-          this.$router.push('/signup')
+          router.push('/signup')
         })
     },
     // 로그아웃
     logout ({ commit }) {
       commit('logout')
-      this.$router.push('/')
+      router.push('/').catch(() => {})
     }
   },
   modules: {
