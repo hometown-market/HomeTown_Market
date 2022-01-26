@@ -26,6 +26,7 @@ $primary: #FED07A;
   padding: 16px 27px;
   border-radius: 16px;
   justify-content: center;
+  margin-top: 180px;
 
   &.white {
     background-color: #ffffff;
