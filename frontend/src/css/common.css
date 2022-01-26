@@ -22,3 +22,25 @@ body {
   padding-bottom: 40px;
   position: relative;
 }
+
+.slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slider-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 300%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0px;
+  pointer-events: none;
+}
+
+.slider-item {
+  height: 100%;
+}
