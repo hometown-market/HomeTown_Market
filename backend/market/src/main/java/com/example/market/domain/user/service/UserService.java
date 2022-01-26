@@ -26,10 +26,15 @@ public class UserService {
                 .name(userJoinRequest.getName())
                 .password(userJoinRequest.getPassword())
                 .address(userJoinRequest.getAddress())
+                .phone(userJoinRequest.getPhone())
                 .role("ROLE_USER")
                 .build()
         );
 
 
+    }
+
+    public boolean checkEmail(String email) {
+        return repository.findByEmail(email) == null;
     }
 }

@@ -60,11 +60,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests().antMatchers("/test").authenticated();
 
+
         http.oauth2Login()
                 .successHandler(OAuth2LoginSuccessHandler)
                 .loginPage("/login")
                 .authorizationEndpoint()
-                .baseUri("/login")
+                .baseUri("/login/oauth")
                 .and()
                 .userInfoEndpoint()
                 .userService(oAuthService);

@@ -1,10 +1,12 @@
 package com.example.market.domain.wish;
 
 import com.example.market.domain.product.Product;
-import com.example.market.domain.product.ProductRepository;
+import com.example.market.domain.product.repository.ProductRepository;
 import com.example.market.domain.user.User;
 import com.example.market.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,13 +18,21 @@ public class WishService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
-    @Transactional
-    public void wishing(String userName, long productId) {
+
+    public void wishing(long productId) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
         Product product = productRepository.getById(productId);
-        User user = userRepository.findByName(userName);
-        for(Wish wish : wishRepository.findAll()) {
-            if(wish.getProduct().getId() == productId && wish.getUser().getName().equals(userName)) wishRepository.delete(wish);
+        User user = userRepository.findByEmail(email);
+
+        if (user != null && product != null) {
+            Wish wish = wishRepository.findByProduct_IdAndUser_Id(productId, user.getId());
+            if (wish != null) {
+                wishRepository.delete(wish);
+            } else {
+                wishRepository.save(new Wish(product, user));
+            }
         }
-        wishRepository.findAll().add(new Wish(product, user));
     }
 }

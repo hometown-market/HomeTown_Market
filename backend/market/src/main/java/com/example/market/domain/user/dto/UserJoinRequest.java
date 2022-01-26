@@ -1,9 +1,11 @@
 package com.example.market.domain.user.dto;
 
-import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
@@ -12,9 +14,12 @@ import lombok.Setter;
 public class UserJoinRequest {
 
 
-    @NotNull
+    @NotBlank
+    @Email
     private String email;
+    @NotBlank
     private String password;
+    private String phone;
     private String name;
     private String address;
     private String role;
