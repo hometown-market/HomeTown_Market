@@ -5,7 +5,6 @@ import com.example.market.domain.product.dto.ProductDetailsDTO;
 import com.example.market.domain.product.dto.ProductListDTO;
 import com.example.market.domain.product.service.ProductService;
 import com.example.market.domain.wish.WishService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,7 +23,7 @@ public class ProductController {
     private final ProductService productService;
 
     @ApiOperation(value = "상품 찜", notes = "상품 찜")
-    @PostMapping("/product/{productId}")
+    @PostMapping("/api/products/wish/{productId}")
     public void wishing(@PathVariable long productId) {
         wishService.wishing(productId);
     }
@@ -45,15 +46,12 @@ public class ProductController {
     @GetMapping("/api/product_list/{categoryId}")
     public Page<Product> categoryProduct(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable long categoryId) {
 
-        Page<Product> products = productService.categoryProduct(pageable, categoryId);
-
-        return products;
+        return productService.categoryProduct(pageable, categoryId);
     }
 
     @ApiOperation(value = "상품 조회", notes = "상품 조회")
     @GetMapping("/product/{productId}")
-    public ProductDetailsDTO productDetail(@PathVariable long productId) {
-        ProductDetailsDTO productDetailsDTO = productService.getProductDto(productId);
-        return productDetailsDTO;
+    public Optional<ProductDetailsDTO> productDetail(@PathVariable long productId) {
+        return productService.productDetail(productId);
     }
 }

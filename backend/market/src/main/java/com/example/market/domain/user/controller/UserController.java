@@ -1,12 +1,16 @@
 package com.example.market.domain.user.controller;
 
 import com.example.market.domain.user.User;
+import com.example.market.domain.user.dto.UserEmailRequest;
 import com.example.market.domain.user.dto.UserJoinRequest;
 import com.example.market.domain.user.service.UserService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +34,7 @@ public class UserController {
     @ApiOperation(value = "로그인 요청", notes = "로그인 요청")
     @PostMapping("/login/")
     public String login() {
+
         return "ok";
     }
 
@@ -45,10 +50,11 @@ public class UserController {
 
     @ApiOperation(value = "이메일 중복체크", notes = "이메일 중복체크")
     @PostMapping("/api/login/email-check")
-    public boolean emailCheck(@RequestBody String email, HttpServletRequest request, HttpServletResponse response) {
+    public boolean emailCheck(@Validated @RequestBody UserEmailRequest userEmailRequest, HttpServletRequest request, HttpServletResponse response) {
 
         boolean status;
-        if (userService.checkEmail(email)) {
+        if (userService.checkEmail(userEmailRequest.getEmail())) {
+
             status = true;
             return status;
         } else {
