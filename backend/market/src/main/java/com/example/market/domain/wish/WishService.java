@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -26,12 +27,15 @@ public class WishService {
         Product product = productRepository.getById(productId);
         User user = userRepository.findByEmail(email);
 
+        Set<Long> productIds = wishRepository.getProductIds(user.getId());
+
         if (user != null && product != null) {
-            Wish wish = wishRepository.findByProduct_IdAndUser_Id(productId, user.getId());
-            if (wish != null) {
+            Wish wish = new Wish(product, user);
+
+            if (productIds.contains(productId)) {
                 wishRepository.delete(wish);
             } else {
-                wishRepository.save(new Wish(product, user));
+                wishRepository.save(wish);
             }
         }
     }

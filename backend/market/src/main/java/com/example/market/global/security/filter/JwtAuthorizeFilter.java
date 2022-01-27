@@ -2,13 +2,13 @@ package com.example.market.global.security.filter;
 
 import com.example.market.domain.user.service.UserDetailsServiceImpl;
 import com.example.market.global.security.util.JwtTokenUtil;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -18,12 +18,17 @@ import java.io.IOException;
 
 
 @Slf4j
-@RequiredArgsConstructor
-public class JwtAuthorizeFilter extends OncePerRequestFilter {
+public class JwtAuthorizeFilter extends BasicAuthenticationFilter {
 
 
     private final JwtTokenUtil jwtTokenUtil;
     private final UserDetailsServiceImpl userDetailsService;
+
+    public JwtAuthorizeFilter(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, UserDetailsServiceImpl userDetailsService) {
+        super(authenticationManager);
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.userDetailsService = userDetailsService;
+    }
 
 
     @Override

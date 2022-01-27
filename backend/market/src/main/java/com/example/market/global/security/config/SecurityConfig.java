@@ -9,6 +9,7 @@ import com.example.market.global.security.util.JwtTokenUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -56,9 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests().antMatchers("/join").permitAll()
-                .and()
-                .authorizeRequests().antMatchers("/test").authenticated();
+                .authorizeRequests()
+                .antMatchers("/join").permitAll()
+                .antMatchers("/test").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/products/wish/**").authenticated();
 
 
         http.oauth2Login()
@@ -71,11 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userService(oAuthService);
 
 
-
-
-
-        http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(),jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
-        http.addFilterAfter(new JwtAuthorizeFilter(jwtTokenUtil,userDetailsService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(new JwtAuthorizeFilter(authenticationManager(), jwtTokenUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
 
     }

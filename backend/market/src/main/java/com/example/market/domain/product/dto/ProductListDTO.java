@@ -1,17 +1,15 @@
 package com.example.market.domain.product.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import com.example.market.domain.product.Product;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
-@Getter
-@Setter
-@Builder
+
+@Data
 public class ProductListDTO {
+    private Long id;
+    private boolean wish = false;
     private String title;
     private int price;
     private String productImgUrl;
@@ -20,4 +18,12 @@ public class ProductListDTO {
 
 
 
+    public ProductListDTO(Product product) {
+        this.id = product.getId();
+        this.price = product.getPrice();
+        this.productImgUrl = product.getProductImgUrl();
+        this.title = product.getTitle();
+        this.uploadDate = product.getUploadDate();
+        this.wishCount = product.getWishCount();
+    }
 }

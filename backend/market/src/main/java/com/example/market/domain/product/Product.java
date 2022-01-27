@@ -49,15 +49,6 @@ public class Product {
     @JsonIgnoreProperties({"product"})
     private List<Wish> wishList;
 
-
-    public void setWishCount(long wishCount) {
-        this.wishCount = wishCount;
-    }
-
-    public void setIsWish(boolean isWish) {
-        this.isWish = isWish;
-    }
-
     @PrePersist
     public void uploadDate() {
         this.uploadDate = LocalDateTime.now();

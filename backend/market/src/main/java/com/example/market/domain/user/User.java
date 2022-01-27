@@ -9,15 +9,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 
 @Getter
 @RequiredArgsConstructor
 @Entity
+
 public class User implements UserDetails {
 
     @Builder
@@ -94,7 +92,7 @@ public class User implements UserDetails {
     private List<Product> productList;
 
     @OneToMany(mappedBy = "user")
-    private List<Wish> wishList;
+    private Set<Wish> wishList;
 
 }
 
