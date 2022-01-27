@@ -1,6 +1,9 @@
 <template>
   <div class="hm-text">
-    <div class="text-label">{{ label }}</div>
+    <div
+      class="text-label"
+      @click.prevent="$emit('click')"
+    >{{ label }}</div>
   </div>
 </template>
 
@@ -9,7 +12,8 @@
 export default {
   name: 'hm-ui-text',
   props: {
-    label: { type: String }
+    label: { type: String },
+    click: { type: String }
   }
 }
 </script>
@@ -24,5 +28,6 @@ export default {
   display: flex;
   justify-content: flex-end;
   margin-top: 5px;
+  height: 14px;
 }
 </style>

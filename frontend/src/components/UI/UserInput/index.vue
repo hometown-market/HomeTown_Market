@@ -1,11 +1,13 @@
 <template>
   <div class="hm-user-input">
     <input
-      :class="[ 'hm-input-test', placeholder, type ]"
+      :class="[ 'hm-input-test', {error: error} ]"
       v-model="$value"
       :placeholder="placeholder"
       :type="type"
+      :readonly="readonly"
     >
+    <hm-ui-text :label="errorMessage" size="w100"></hm-ui-text>
   </div>
 </template>
 
@@ -25,6 +27,17 @@ export default {
     },
     value: {
       type: String
+    },
+    error: {
+      type: Boolean
+    },
+    errorMessage: {
+      type: String,
+      default: ''
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {
@@ -53,6 +66,11 @@ export default {
     color: #C8C8C8;
     margin-top: 31px;
     outline: none;
+    padding-bottom: 4px;
+  }
+
+  .error {
+    color: red; // 임시 error css
   }
 }
 </style>

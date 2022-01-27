@@ -4,11 +4,23 @@
       <div class="modal-card">
         <div class="close-modal" @click="$emit('close-modal')"><img src="@/assets/icons/icon-close-bk.svg"/></div>
         <div class="title">우동마켓</div>
-        <div id="btn-group" class="btn-list">
-          <button class="btn-style" href="http://15.165.216.62:8080/api/oauth/google">구글로 시작하기</button>
-          <button class="btn-style" href="http://15.165.216.62:8080/api/oauth/naver">네이버로 시작하기</button>
-          <button class="btn-style" href="http://15.165.216.62:8080/api/oauth/facebook">페이스북으로 시작하기</button>
-          <button class="btn-style last" v-on:click="login">우동마켓으로 시작하기</button>
+        <div class="btn-list">
+          <button class="btn-style" href="http://15.165.216.62:8080/api/oauth/google">
+            <img class="btn-image" src="@/assets/logo/logo-google.svg"/>
+            구글로 시작하기
+          </button>
+          <button class="btn-style" href="http://15.165.216.62:8080/api/oauth/naver">
+            <img class="btn-image" src="@/assets/logo/logo-naver.svg"/>
+            네이버로 시작하기
+          </button>
+          <button class="btn-style" href="http://15.165.216.62:8080/api/oauth/facebook">
+            <img class="btn-image" src="@/assets/logo/logo-facebook.svg"/>
+            페이스북으로 시작하기
+          </button>
+          <button class="btn-style last" v-on:click="login">
+            <img src="@/assets/logo/logo-main.svg" style="width: 77px"/>
+            으로 시작하기
+          </button>
         </div>
       </div>
     </div>
@@ -17,7 +29,6 @@
 
 <script>
 export default {
-  el: '#btn-group',
   methods: {
     login: function (event) {
       if (event) {
@@ -29,7 +40,7 @@ export default {
 }
 </script>
 
-<style scope>
+<style scope lang="scss">
 .modal,
 .overlay {
   width: 100%;
@@ -39,7 +50,7 @@ export default {
   top: 0;
 }
 .overlay {
-  background-color: rgb(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 .modal-card {
   position: relative;
@@ -64,7 +75,15 @@ export default {
   padding: 14px;
   border-radius: 20px;
   border: white;
-  box-shadow: 2px 2px 3px 1px rgb(187 187 187);
+  font-size: 14px;
+  line-height: 19px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .btn-image {
+    margin-right: 6px;
+  }
 }
 .title {
   display: flex;
@@ -79,7 +98,7 @@ export default {
   justify-content: flex-end;
   margin-bottom: 40px;
   width: 100%;
-  height: 50px;
+  height: 25px;
   z-index: 19;
 }
 @media screen and (max-width: 460px) {

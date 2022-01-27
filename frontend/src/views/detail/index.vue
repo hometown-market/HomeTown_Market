@@ -1,6 +1,6 @@
 <template>
   <div class="detail-container">
-    <div class="image-container" :style="'background-image: url('+ productInfo.product_img +')'">
+    <div class="image-container" :style="'background-image: url('+ productInfo.productImgUrl +')'">
       <div class="icon-container">
         <hm-ui-icon name="icon-back-w" @icon-click="onClickBackIcon"></hm-ui-icon>
         <hm-ui-icon name="icon-search-pc" @icon-click="onClickSearchIcon"></hm-ui-icon>
@@ -8,8 +8,8 @@
     </div>
     <div class="info-container">
       <div class="top-container">
-        <p>{{ productInfo.product_title }}</p>
-        <p>{{ productInfo.product_price }}원</p>
+        <p class="product-title">{{ productInfo.title }}</p>
+        <p class="product-price">{{ numberWithCommas(productInfo.price) }}원</p>
         <div class="icon-container">
           <div class="like-container">
             <hm-ui-icon name="icon-like-g"/> 0
@@ -23,13 +23,16 @@
         </div>
       </div>
       <div class="bottom-container">
-        {{ productInfo.product_description }}
+        {{ productInfo.text }}
       </div>
 
     </div>
   </div>
 </template>
 <script>
+// import { Rest, RestUrl } from '@/modules/Rest.js'
+import productData from '@/assets/product.json'
+
 export default {
   name: 'Detail',
   components: {
@@ -52,6 +55,11 @@ export default {
       productInfo: {}
     }
   },
+  computed: {
+    productId () {
+      return this.$route.params.productId
+    }
+  },
   methods: {
     onClickBackIcon () {
       this.$router.go(-1)
@@ -61,23 +69,19 @@ export default {
         name: 'search'
       })
     },
-    fetchProductInfo () {
-      // axios get product_detail?product_id=1234&uid=00000000000
-      this.productInfo = {
-        product_id: 123,
-        likes: 0,
-        product_img: 'https://media.bunjang.co.kr/product/175067065_1_1641306224_w354.jpg',
-        product_title: this.keyword + '상품 이름 1',
-        product_price: 10000,
-        create_time: 1607110465663,
-        locate_authorization: true,
-        likes_number: 16,
-        product_description: `남성 매킨토시 트렌치코드입니다.
-          사이즈 38(100)입니다.
-          직거래 가능합니다.
-          택배비는 별도입니다.
-        `
+    async fetchProductInfo () {
+      try {
+        // const response = await Rest.get(`${RestUrl.ProductDetail}` + `${this.productId}`)
+        // this.productInfo = response.data
+        this.productInfo = productData
+        console.log(this.productInfo)
+      } catch (error) {
+        console.log(error)
+        alert(error)
       }
+    },
+    numberWithCommas (x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
   }
 }
@@ -110,6 +114,15 @@ export default {
       position: relative;
       padding-bottom: 20px;
       border-bottom: 1px solid #C4C4C4;
+
+      .product-title {
+        font-size: 18px;
+        margin-bottom: 6px;
+      }
+
+      .product-price {
+        font-size: 23px;
+      }
       .icon-container {
         display: flex;
         width: 120px;
@@ -144,6 +157,7 @@ export default {
 
     .bottom-container {
       padding-top: 25px;
+      line-height: 22px;
     }
   }
 }

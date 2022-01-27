@@ -8,7 +8,11 @@
       @update="(value) => keyword = value"
     />
     <div class="slider">
-      <img :src="require(`@/assets/banner/banner1.png`)" />
+      <div class="slider-inner">
+        <img class="slider-item" :src="require(`@/assets/banner/banner1.png`)" />
+        <img class="slider-item" :src="require(`@/assets/banner/banner2.png`)" />
+        <img class="slider-item" :src="require(`@/assets/banner/banner3.png`)" />
+      </div>
     </div>
     <div class="recent-list-contianer">
       <h4>방금 올라온 상품</h4>
@@ -18,20 +22,25 @@
 </template>
 <script>
 import ProductList from '@/components/product-list'
+// import { Rest, RestUrl } from '@/modules/Rest.js'
+import productListData from '@/assets/productList.json/'
 
 export default {
   name: 'Main',
   components: {
     ProductList
   },
-  created () {
-    this.fetchProductList()
-  },
   data () {
     return {
       productList: [],
-      total: undefined
+      total: undefined,
+      pressed: false,
+      startx: '',
+      x: ''
     }
+  },
+  created () {
+    this.fetchProductList()
   },
   methods: {
     onClickLikeIcon () {
@@ -45,72 +54,59 @@ export default {
         name: 'search'
       })
     },
-    fetchProductList () {
-      // axios get product_list?recent_type=00&uid=00000000000
-      this.total = 100
-      this.productList = [
-        {
-          product_id: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/175067065_1_1641306224_w354.jpg',
-          product_title: '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          product_id: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/175067065_1_1641306224_w354.jpg',
-          product_title: '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          product_id: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/175067065_1_1641306224_w354.jpg',
-          product_title: '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          product_id: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/175067065_1_1641306224_w354.jpg',
-          product_title: '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          product_id: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/103269118_1_1626911735_w354.jpg',
-          product_title: '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        },
-        {
-          product_id: 123,
-          likes: 0,
-          product_img: 'https://media.bunjang.co.kr/product/103269118_1_1626911735_w354.jpg',
-          product_title: '상품 이름',
-          product_price: 10000,
-          create_time: 1607110465663,
-          locate_authorization: true,
-          likes_number: 16
-        }
-      ]
+    async fetchProductList () {
+      try {
+        // const response = await Rest.get(RestUrl.ProductList)
+        // this.productList = response.data.content
+        // this.total = response.data.totalElements
+        this.productList = productListData
+      } catch (error) {
+        console.log(error)
+        alert(error)
+      }
+    },
+    //  슬라이더 제어 함수
+    async checkboundary () {
+      const slider = document.querySelector('.slider')
+      const innerSlider = document.querySelector('.slider-inner')
+      const outer = slider.getBoundingClientRect()
+      const inner = innerSlider.getBoundingClientRect()
+
+      if (parseInt(innerSlider.style.left) > 0) {
+        innerSlider.style.left = '0px'
+      } else if (inner.right < outer.right) {
+        innerSlider.style.left = `-${inner.width - outer.width}px`
+      }
     }
+  },
+  mounted: function () {
+    const slider = document.querySelector('.slider')
+    const innerSlider = document.querySelector('.slider-inner')
+    slider.addEventListener('mousedown', e => {
+      this.pressed = true
+      this.startx = e.offsetX - innerSlider.offsetLeft
+      slider.style.cursor = 'grabbing'
+    })
+    slider.addEventListener('mouseenter', () => {
+      slider.style.cursor = 'grab'
+    })
+
+    slider.addEventListener('mouseup', () => {
+      slider.style.cursor = 'grab'
+    })
+
+    window.addEventListener('mouseup', () => {
+      this.pressed = false
+    })
+
+    slider.addEventListener('mousemove', e => {
+      if (!this.pressed) return
+      e.preventDefault()
+      this.x = e.offsetX
+
+      innerSlider.style.left = `${this.x - this.startx}px`
+      this.checkboundary()
+    })
   }
 }
 </script>
@@ -118,6 +114,7 @@ export default {
 <style lang="scss">
 .main-container {
   .slider {
+    height: 234px;
     img {
       width: 100%;
     }
@@ -128,6 +125,7 @@ export default {
       text-align: center;
       font-size: 18px;
       font-weight: normal;
+      margin: 31px 0;
     }
   }
 }

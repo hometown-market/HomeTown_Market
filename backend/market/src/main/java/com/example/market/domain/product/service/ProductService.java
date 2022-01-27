@@ -1,6 +1,8 @@
 package com.example.market.domain.product.service;
 
 
+import com.example.market.domain.category.Category;
+import com.example.market.domain.category.CategoryRepository;
 import com.example.market.domain.product.Product;
 import com.example.market.domain.product.dto.ProductDetailsDTO;
 import com.example.market.domain.product.dto.ProductListDTO;
@@ -21,7 +23,7 @@ public class ProductService {
     private final UserRepository userRepository;
     private final WishRepository wishRepository;
     private final ProductServiceUtil serviceUtil;
-    public static final String ROLE_USER = "ROLE_USER";
+    private final CategoryRepository categoryRepository;
 
     public Page<ProductListDTO> search(String keyword, Pageable pageable) {
         Page<ProductListDTO> products = productRepository.findByTitleContainsOrderByUploadDateDesc(keyword, pageable).map(ProductListDTO::new);
@@ -39,13 +41,11 @@ public class ProductService {
         return products;
     }
 
-    public Page<Product> categoryProduct(Pageable pageable, long categoryId) {
-//        ProductServiceUtil.getAuthentication();
 
-        for (Product product : productRepository.findAll(pageable)) {
-            if (product.getCategory().getCategoryId() == categoryId) return (Page<Product>) product;
-        }
-        return null;
+    public Page<ProductListDTO> categoryProduct(Pageable pageable, long categoryId) {
+        Category category = categoryRepository.getById(categoryId);
+        Page<Product> products = productRepository.findAllByCategoryOrderByUploadDate(category, pageable);
+        return getProductsListDTO(products);
     }
 
     public Optional<ProductDetailsDTO> productDetail(long productId) {

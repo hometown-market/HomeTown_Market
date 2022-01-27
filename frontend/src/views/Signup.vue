@@ -1,118 +1,187 @@
 <template>
   <div>
     <form @submit.prevent="formSubmit" class="signup-form">
-      <div v-if="session === 0">
+      <div v-if="step === 0">
         <p class="text-signup">아이디를 <br/>입력해주세요.</p>
-        <hm-ui-user-input v-model="email" @update="(value) => email = value" placeholder="아이디 입력" type="text"></hm-ui-user-input>
-        <!-- <input class="user-input" v-model="email" type="text" placeholder="아이디 입력"> -->
-        <hm-ui-text label="E-mail 주소를 입력해 주세요." size="w100"></hm-ui-text>
-        <hm-ui-button label="계속하기" color="primary" size="w100" @click="session = (this.session + 1) % 5"></hm-ui-button>
-        <button class="">로그인하기</button>
+        <hm-ui-user-input
+          v-model="email"
+          @update="(value) => { email = value, reset() }"
+          :error="validation.hasError('email') || error.hasError"
+          :error-message="emailErrorMessage"
+          placeholder="아이디 입력"
+          type="text"
+        ></hm-ui-user-input>
+        <hm-ui-button label="계속하기" color="primary" size="w100" @click="onSubmit0"></hm-ui-button>
       </div>
-      <div v-if="session === 1">
+      <div v-if="step === 1">
         <p class="text-signup">비밀번호를 <br/>입력해주세요.</p>
-        <hm-ui-user-input v-model="password" placeholder="비밀번호 입력" type="password"></hm-ui-user-input>
-        <hm-ui-text label="8자리 이상 입력해 주세요." size="w100"></hm-ui-text>
-        <hm-ui-user-input placeholder="비밀번호 확인" type="password"></hm-ui-user-input>
-        <hm-ui-text label="다시 한 번 입력해 주세요." size="w100"></hm-ui-text>
-        <hm-ui-button label="계속하기" color="primary" size="w100"></hm-ui-button>
+        <hm-ui-user-input
+          v-model="password"
+          @update="(value) => password = value"
+          :error="validation.hasError('password')"
+          :error-message="validation.firstError('password')"
+          placeholder="비밀번호 입력"
+          type="password"
+        ></hm-ui-user-input>
+        <hm-ui-user-input
+          v-model="checkpassword"
+          @update="(value) => checkpassword = value"
+          :error="validation.hasError('checkpassword')"
+          :error-message="validation.firstError('checkpassword')"
+          placeholder="비밀번호 확인"
+          type="password"
+        ></hm-ui-user-input>
+        <hm-ui-button label="계속하기" color="primary" size="w100" @click="onSubmit1"></hm-ui-button>
       </div>
-      <div v-if="session === 2">
+      <div v-if="step === 2">
+        <!-- 추후 디자인 변경 -->
         <p class="text-signup">전화번호를 <br/>입력해주세요.</p>
-        <hm-ui-user-input></hm-ui-user-input>
-        <hm-ui-text label="- 없이 입력해 주세요." size="w100"></hm-ui-text>
-        <hm-ui-user-input></hm-ui-user-input>
-        <hm-ui-button label="계속하기" color="primary" size="w100"></hm-ui-button>
+        <hm-ui-user-input
+          v-model="phone"
+          @update="(value) => phone = value"
+          :error="validation.hasError('phone')"
+          :error-message="validation.firstError('phone')"
+          placeholder="전화번호 입력"
+          type="number"
+        ></hm-ui-user-input>
+        <hm-ui-button label="계속하기" color="primary" size="w100" @click="onSubmit2"></hm-ui-button>
       </div>
-      <div v-if="session === 3">
+      <div v-if="step === 3">
         <p class="text-signup">주소를 <br/>입력해주세요.</p>
-        <hm-ui-user-input></hm-ui-user-input>
-        <hm-ui-text label="ex)서초동" size="w100"></hm-ui-text>
-        <hm-ui-button label="계속하기" color="primary" size="w100"></hm-ui-button>
+        <hm-ui-user-input
+          v-model="address"
+          @update="(value) => address = value"
+          :error="validation.hasError('address')"
+          :error-message="validation.firstError('address')"
+          placeholder="주소 입력"
+          type="text"
+        ></hm-ui-user-input>
+        <hm-ui-button label="계속하기" color="primary" size="w100" @click="onSubmit3"></hm-ui-button>
       </div>
-      <div v-if="session === 4">
+      <div v-if="step === 4">
         <p class="text-signup">우리동네 <br/>설정이 완료되었어요!</p>
-        <hm-ui-user-input>{{address}}</hm-ui-user-input>
-        <hm-ui-button label="회원가입 완료" color="primary" size="w100"></hm-ui-button>
+        <hm-ui-user-input
+          :placeholder= address
+          type="text"
+          readonly
+        >{{this.address}}</hm-ui-user-input>
+        <hm-ui-button label="회원가입 완료" color="primary" size="w100" @click="onSubmit4"></hm-ui-button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+import SimpleVueValidator from 'simple-vue-validator'
+import { Rest, RestUrl } from '@/modules/Rest.js'
+const Validator = SimpleVueValidator.Validator
+
+Vue.use(SimpleVueValidator)
+
 export default {
   data () {
     return {
-      session: 0,
+      step: 0,
       email: '',
       password: '',
       checkpassword: '',
       phone: '',
       address: '',
       state: false,
-      signupObj: [this.email, this.password, this.checkpassword, this.phone, this.address]
+      error: {
+        hasError: false,
+        message: undefined
+      },
+      submitted: false
+    }
+  },
+  computed: {
+    emailErrorMessage () {
+      if (this.error.hasError) {
+        return this.error.message
+      } else {
+        return this.validation.firstError('email')
+      }
+    }
+  },
+  validators: {
+    email: function (value) {
+      return Validator.value(value).required('E-mail 주소를 입력해 주세요.').email('이메일 형식으로 작성해주세요.')
+    },
+    password: function (value) {
+      return Validator.value(value).required('비밀번호를 입력해 주세요.').minLength(8, '8자리 이상 입력해 주세요.').maxLength(16, '16자리 이하로 입력해 주세요.')
+    },
+    'checkpassword, password': function (checkpassword, password) {
+      if (this.submitted || this.validation.isTouched('checkpassword')) {
+        return Validator.value(checkpassword).required('비밀번호를 입력해 주세요.').match(password, '비밀번호가 일치하지 않습니다.')
+      }
+    },
+    phone: function (value) {
+      return Validator.value(value).required('전화번호를 입력해 주세요.').minLength(9, '- 없이 입력해 주세요.').maxLength(11, '알맞은 전화번호를 입력해 주세요.')
+    },
+    address: function (value) {
+      return Validator.value(value).required('주소를 입력해 주세요.').minLength(3, 'ex) 서초동')
     }
   },
   methods: {
-    // async formSubmit (event) {
-    //   console.log(event)
-    //   if (event) {
-    //     if (this.session === 0 && this.email === '') {
-    //       console.log('아이디를 입력해 주세요')
-    //     }
-    //   }
-    // switch (event) {
-    //   case 0:
-
-    //     // 아이디 값이 없을 때
-    //     console.log('입력된 값이 없습니다')
-    //     break
-    //   case (this.session === 0 || this.email !== null):
-    //     // 아이디 값이 있을 때
-    //     this.$store.dispatch('emailCheck', [this.email, this.session])
-    //     this.session = (this.session + 1) % 5
-    //     console.log(this.email)
-    //     break
-    //   case (this.session === 1 || (this.password === null && this.checkpassword === null)):
-    //     // 비밀번호 또는 비밀번호 확인의 값이 없을 때
-    //     console.log('비밀번호와 비밀번호 확인을 입력해 주세요.')
-    //     break
-    //   case (this.session === 1 || (this.password !== null || this.checkpassword !== null)):
-    //     // 비밀번호 또는 비밀번호 확인의 값이 있을 때
-    //     if (this.password !== this.checkpassword) {
-    //       console.log('비밀번호가 일치하지 않습니다.')
-    //     } else if (this.password === this.checkpassword) {
-    //       console.log(this.password, this.checkpassword)
-    //       this.session = (this.session + 1) % 5
-    //     }
-    //     break
-    //   case (this.session === 2 || this.phone === null):
-    //     // 전화번호의 값이 없을 때
-    //     console.log('전화번호를 입력해 주세요.')
-    //     break
-    //   case (this.session === 2 || this.phone !== null):
-    //     // 전화번호의 값이 있을 때
-    //     console.log(this.phone)
-    //     this.session = (this.session + 1) % 5
-    //     break
-    //   case (this.session === 3 || this.address === null):
-    //     // 주소의 값이 없을 때
-    //     console.log('주소를 입력해 주세요.')
-    //     break
-    //   case (this.session === 3 || this.addres !== null):
-    //     // 주소의 값이 있을 때
-    //     console.log(this.address)
-    //     this.session = (this.session + 1) % 5
-    //     break
-    //   case (this.session === 4):
-    //     // 모든 값을 입력했을 때
-    //     this.$store.dispatch('signup', this.signupObj)
-    //     break
-    //   default:
-    //     // this.$router.push('/signup')
-    //     break
-    // }
-    // }
+    reset () {
+      this.error.hasError = false
+      this.error.message = undefined
+    },
+    async onSubmit0 () {
+      const success = await this.$validate('email')
+      const response = await Rest.post(RestUrl.emailCheck, this.email)
+      if (success) {
+        response
+          .then((res) => {
+            if (res.data.status === true) {
+              this.step = (this.step + 1)
+            } else if (res.data.status === false) {
+              this.error.hasError = true
+              this.error.message = '사용 불가능한 이메일 입니다.'
+            }
+          })
+          .catch((err) => {
+            alert(err)
+            // 해당 내용은 api 테스트 완료 이후 제거
+            this.error.hasError = true
+            this.error.message = '사용 불가능한 이메일 입니다.'
+            this.step = (this.step + 1)
+          })
+      }
+    },
+    async onSubmit1 () {
+      const success = await this.$validate('password', 'checkpassword, password')
+      if (success) {
+        this.step = (this.step + 1)
+      }
+    },
+    async onSubmit2 () {
+      const success = await this.$validate('phone')
+      if (success) {
+        this.step = (this.step + 1)
+      }
+    },
+    async onSubmit3 () {
+      const success = await this.$validate('address')
+      if (success) {
+        this.step = (this.step + 1)
+      }
+    },
+    async onSubmit4 () {
+      const success = await this.$validate()
+      const signupObj = {
+        email: this.email,
+        password: this.password,
+        checkpassword: this.checkpassword,
+        phone: this.phone,
+        address: this.address
+      }
+      if (success) {
+        this.$store.dispatch('signup', signupObj)
+      }
+    }
   }
 }
 </script>
