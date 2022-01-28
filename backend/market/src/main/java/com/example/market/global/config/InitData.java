@@ -30,7 +30,7 @@ public class InitData {
                     .price(i)
                     .text("prduct " + Integer.toString(i))
                     .productImgUrl("https://media.bunjang.co.kr/product/176911291_1_1642914208_w292.jpg")
-                    .category(categoryRepository.getById(10L))
+                    .category(categoryRepository.getById(101010L))
                     .build();
             productRepository.save(product);
         }
