@@ -44,8 +44,8 @@ public class ProductService {
 
     public Page<ProductListDTO> categoryProduct(Pageable pageable, long categoryId) {
         Category category = categoryRepository.getById(categoryId);
-        Page<Product> products = productRepository.findAllByCategoryOrderByUploadDate(category, pageable);
-        return getProductsListDTO(products);
+        Page<ProductListDTO> products = productRepository.findAllByCategoryOrderByUploadDateDesc(category, pageable).map(ProductListDTO::new);
+        return products;
     }
 
     public Optional<ProductDetailsDTO> productDetail(long productId) {

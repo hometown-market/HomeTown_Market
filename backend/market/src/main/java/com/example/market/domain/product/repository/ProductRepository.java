@@ -28,5 +28,5 @@ ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findByUser_Id(long id, Pageable pageable);
 
-    Page<Product> findAllByCategoryOrderByUploadDate(Category category, Pageable pageable);
+    Page<Product> findAllByCategoryOrderByUploadDateDesc(Category category, Pageable pageable);
 }
