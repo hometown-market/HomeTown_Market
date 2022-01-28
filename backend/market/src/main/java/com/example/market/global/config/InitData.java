@@ -1,5 +1,6 @@
 package com.example.market.global.config;
 
+import com.example.market.domain.category.CategoryRepository;
 import com.example.market.domain.product.Product;
 import com.example.market.domain.product.repository.ProductRepository;
 import com.example.market.domain.user.User;
@@ -11,10 +12,12 @@ public class InitData {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final CategoryRepository categoryRepository;
 
-    public InitData(ProductRepository productRepository, UserRepository userRepository) {
+    public InitData(ProductRepository productRepository, UserRepository userRepository, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
+        this.categoryRepository = categoryRepository;
         initProduct();
         initUser();
     }
@@ -27,6 +30,7 @@ public class InitData {
                     .price(i)
                     .text("prduct " + Integer.toString(i))
                     .productImgUrl("https://media.bunjang.co.kr/product/176911291_1_1642914208_w292.jpg")
+                    .category(categoryRepository.getById(101010L))
                     .build();
             productRepository.save(product);
         }
