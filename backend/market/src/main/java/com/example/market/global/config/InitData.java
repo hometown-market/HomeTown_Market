@@ -25,8 +25,8 @@ public class InitData {
 
     private void initProduct() {
 
-        Category category1 = new Category(10L, "test1", 0L);
-        Category category2 = new Category(11L, "test2", 0L);
+        Category category1 = new Category(10L, "test1",null);
+        Category category2 = new Category(11L, "test2",null);
         Category category3 = new Category(1010L, "test1-1", 10L);
         Category category4 = new Category(1011L, "test1-2", 10L);
         Category category5 = new Category(101010L, "test1-1-1", 1010L);
@@ -35,7 +35,7 @@ public class InitData {
         categoryRepository.save(category3);
         categoryRepository.save(category4);
         categoryRepository.save(category5);
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10; i++) {
 
             Product product = Product.builder()
                     .title("prduct " + Integer.toString(i))
@@ -43,6 +43,17 @@ public class InitData {
                     .text("prduct " + Integer.toString(i))
                     .productImgUrl("https://media.bunjang.co.kr/product/176911291_1_1642914208_w292.jpg")
                     .category(categoryRepository.getById(101010L))
+                    .build();
+            productRepository.save(product);
+        }
+        for (int i = 0; i < 10; i++) {
+
+            Product product = Product.builder()
+                    .title("prduct " + Integer.toString(i))
+                    .price(i)
+                    .text("prduct " + Integer.toString(i))
+                    .productImgUrl("https://media.bunjang.co.kr/product/176911291_1_1642914208_w292.jpg")
+                    .category(categoryRepository.getById(1010L))
                     .build();
             productRepository.save(product);
         }

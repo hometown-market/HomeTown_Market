@@ -16,10 +16,10 @@ import java.util.List;
 public class Category {
 
     @Id
-    private long categoryId;
+    private Long categoryId;
 
     private String categoryName;
-    private long parentId;
+    private Long parentId;
 
 
     @OneToMany(mappedBy = "category")

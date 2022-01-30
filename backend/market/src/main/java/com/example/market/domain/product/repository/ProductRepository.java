@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 
 
 @Repository
@@ -29,4 +30,7 @@ ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findByUser_Id(long id, Pageable pageable);
 
     Page<Product> findAllByCategoryOrderByUploadDateDesc(Category category, Pageable pageable);
+
+    @Query("select p from Product p where p.category.categoryId in ?1 order by p.uploadDate DESC")
+    Page<Product> findByCategory_CategoryIdIsInOrderByUploadDateDesc(Collection<Long> categoryIds, Pageable pageable);
 }

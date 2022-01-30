@@ -16,15 +16,23 @@ import java.util.Set;
 public class ProductServiceUtil {
 
     private final WishRepository wishRepository;
-    public static long getAuthentication() {
+    public static Long getAuthentication() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication.getPrincipal().equals("anonymousUser")) {
+            return null;
+        }
+
         User principal = (User) authentication.getPrincipal();
 
         return principal.getId();
     }
 
     public void ProductListDTOSetWish(Page<ProductListDTO> products) {
-        long userid = getAuthentication();
+        Long userid = getAuthentication();
+        if (userid == null) {
+            return;
+        }
         Set<Long> productIds = wishRepository.getProductIds(userid);
         products.iterator().forEachRemaining(productListDTO -> {
             if (productIds.contains(productListDTO.getId())) {

@@ -14,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,7 +46,16 @@ public class ProductService {
 
     public Page<ProductListDTO> categoryProduct(Pageable pageable, long categoryId) {
         Category category = categoryRepository.getById(categoryId);
-        Page<ProductListDTO> products = productRepository.findAllByCategoryOrderByUploadDateDesc(category, pageable).map(ProductListDTO::new);
+
+        List<Long> categoryList = new ArrayList<>();
+        categoryList.add(categoryId);
+        while (category.getParentId() != null) {
+            categoryList.add(category.getParentId());
+            category = categoryRepository.getById(category.getParentId());
+
+        }
+
+        Page<ProductListDTO> products = productRepository.findByCategory_CategoryIdIsInOrderByUploadDateDesc(categoryList, pageable).map(ProductListDTO::new);
         return products;
     }
 
