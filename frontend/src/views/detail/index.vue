@@ -74,7 +74,6 @@ export default {
         // const response = await Rest.get(`${RestUrl.ProductDetail}` + `${this.productId}`)
         // this.productInfo = response.data
         this.productInfo = productData
-        console.log(this.productInfo)
       } catch (error) {
         console.log(error)
         alert(error)
@@ -122,6 +121,7 @@ export default {
 
       .product-price {
         font-size: 23px;
+        font-weight: bold;
       }
       .icon-container {
         display: flex;
@@ -133,6 +133,10 @@ export default {
 
         >div {
           display: flex;
+
+          .hm-icon {
+            margin-right: 2px;
+          }
         }
 
         .like-container {

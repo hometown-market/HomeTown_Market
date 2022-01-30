@@ -106,6 +106,7 @@ export default {
 
     .product-price {
       font-size: 15px;
+      line-height: 18px;
       font-weight: bold;
     }
 
