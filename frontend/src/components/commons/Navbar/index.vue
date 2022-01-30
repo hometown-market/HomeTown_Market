@@ -103,8 +103,8 @@ export default {
     width: 85%;
     background-color: #ffffff;
     border-radius: 0px 20px 20px 0px;
-    padding-top: 90px;
-    padding-left: 25px;
+    padding-top: 50px;
+    padding-left: 40px;
     min-height: 100vh;
     height: 100%;
     position: fixed;
