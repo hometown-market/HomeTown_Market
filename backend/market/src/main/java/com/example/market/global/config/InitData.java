@@ -1,5 +1,6 @@
 package com.example.market.global.config;
 
+import com.example.market.domain.category.Category;
 import com.example.market.domain.category.CategoryRepository;
 import com.example.market.domain.product.Product;
 import com.example.market.domain.product.repository.ProductRepository;
@@ -23,6 +24,17 @@ public class InitData {
     }
 
     private void initProduct() {
+
+        Category category1 = new Category(10L, "test1", 0L);
+        Category category2 = new Category(11L, "test2", 0L);
+        Category category3 = new Category(1010L, "test1-1", 10L);
+        Category category4 = new Category(1011L, "test1-2", 10L);
+        Category category5 = new Category(101010L, "test1-1-1", 1010L);
+        categoryRepository.save(category1);
+        categoryRepository.save(category2);
+        categoryRepository.save(category3);
+        categoryRepository.save(category4);
+        categoryRepository.save(category5);
         for (int i = 0; i < 20; i++) {
 
             Product product = Product.builder()
