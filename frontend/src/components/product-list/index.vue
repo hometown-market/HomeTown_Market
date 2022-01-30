@@ -64,7 +64,7 @@ export default {
   .top-container {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 25px;
     font-size: 20px;
     font-weight: bold;
   }

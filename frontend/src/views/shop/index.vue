@@ -32,8 +32,8 @@
 
     <div class="inner-main border">
       <div class="box-grey"><hm-ui-icon class="icon-menu" name="icon-like-on"></hm-ui-icon>찜</div>
-      <div class="box-grey"><hm-ui-icon class="icon-menu" name="icon-bill-bk"></hm-ui-icon>후기</div>
-      <div class="box-grey"><hm-ui-icon class="icon-menu" name="icon-review-bk"></hm-ui-icon>거래내역</div>
+      <div class="box-grey"><hm-ui-icon class="icon-menu" name="icon-review-bk"></hm-ui-icon>후기</div>
+      <div class="box-grey"><hm-ui-icon class="icon-menu" name="icon-bill-bk"></hm-ui-icon>거래내역</div>
       <div class="box-grey"><hm-ui-icon class="icon-menu" name="icon-service-bk"></hm-ui-icon>고객센터</div>
     </div>
 

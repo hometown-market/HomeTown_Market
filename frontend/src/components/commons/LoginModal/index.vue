@@ -54,7 +54,7 @@ export default {
 }
 .modal-card {
   position: relative;
-  max-width: 420px;
+  max-width: 350px;
   margin: auto;
   margin-top: 50px;
   padding: 20px 20px 50px 20px;
@@ -103,7 +103,11 @@ export default {
 }
 @media screen and (max-width: 460px) {
   .modal-card {
-    margin: 50px 10px 0 10px;
+    margin: 50px 30px 0 30px;
+  }
+  .modal-card {
+    padding: 20px 20px 30px 20px;
+
   }
 }
 </style>

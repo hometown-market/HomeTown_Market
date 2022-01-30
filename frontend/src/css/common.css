@@ -43,10 +43,11 @@ body {
 
 .slider-item {
   height: 100%;
+}
 
 .box-grey {
-  width: 75px;
-  height: 75px;
+  width: 70px;
+  height: 70px;
   background-color: #F5F5F5;
   border-radius: 11px;
   margin: 15px 0;
