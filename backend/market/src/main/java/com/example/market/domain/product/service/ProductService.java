@@ -2,6 +2,7 @@ package com.example.market.domain.product.service;
 
 
 import com.example.market.domain.category.Category;
+import com.example.market.domain.category.CategoryDto;
 import com.example.market.domain.category.CategoryRepository;
 import com.example.market.domain.product.Product;
 import com.example.market.domain.product.dto.ProductDetailsDTO;
@@ -44,7 +45,7 @@ public class ProductService {
     }
 
 
-    public Page<ProductListDTO> categoryProduct(Pageable pageable, long categoryId) {
+    public Page<ProductListDTO> categoryProduct(Pageable pageable, long categoryId, List<CategoryDto> categories) {
         Category category = categoryRepository.getById(categoryId);
 
         List<Long> categoryList = new ArrayList<>();
