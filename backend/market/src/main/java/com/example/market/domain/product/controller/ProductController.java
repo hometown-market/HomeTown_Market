@@ -49,10 +49,9 @@ public class ProductController {
 
     @ApiOperation(value = "카테고리 상품 리스트 조회", notes = "카테고리 상품 조회")
     @GetMapping("/api/product_list/{categoryId}")
-    public void categoryProduct(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable long categoryId, Model model) {
+    public Page<ProductListDTO> categoryProduct(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable long categoryId) {
 
-        model.addAttribute(categoryService.categoryList(categoryId));
-        model.addAttribute(productService.categoryProduct(pageable, categoryId));
+        return productService.categoryProduct(pageable, categoryId);
     }
 
     @ApiOperation(value = "상품 조회", notes = "상품 조회")
