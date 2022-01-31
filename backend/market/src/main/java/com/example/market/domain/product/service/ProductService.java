@@ -45,7 +45,7 @@ public class ProductService {
     }
 
 
-    public Page<ProductListDTO> categoryProduct(Pageable pageable, long categoryId, List<CategoryDto> categories) {
+    public Page<ProductListDTO> categoryProduct(Pageable pageable, long categoryId) {
         Category category = categoryRepository.getById(categoryId);
 
         List<Long> categoryList = new ArrayList<>();
