@@ -19,11 +19,14 @@ public class CategoryService {
     public List<CategoryDto> categoryList(long categoryId) {
         List<CategoryDto> categoryGroup = new ArrayList<>();
         for (Category c : categoryRepository.findAll()) {
-            CategoryDto categories = new CategoryDto(c.getCategoryId(), c.getCategoryName(), c.getParentId());
-            if(categories.getParentId() == categoryId) {
-                categoryGroup.add(categories);
+            while(c.getParentId()!=null) {
+                CategoryDto categories = new CategoryDto(c.getCategoryId(), c.getCategoryName(), c.getParentId());
+                if(categories.getParentId() == categoryId) {
+                    categoryGroup.add(categories);
 
+                }
             }
+
         }
         return categoryGroup;
 
