@@ -1,7 +1,5 @@
 package com.example.market.domain.product.controller;
 
-import com.example.market.domain.category.CategoryService;
-import com.example.market.domain.product.Product;
 import com.example.market.domain.product.dto.ProductDetailsDTO;
 import com.example.market.domain.product.dto.ProductListDTO;
 import com.example.market.domain.product.service.ProductService;
@@ -12,9 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -25,7 +20,6 @@ public class ProductController {
 
     private final WishService wishService;
     private final ProductService productService;
-    private final CategoryService categoryService;
 
     @ApiOperation(value = "상품 찜", notes = "상품 찜")
     @PostMapping("/api/products/wish/{productId}")
@@ -49,7 +43,7 @@ public class ProductController {
 
     @ApiOperation(value = "카테고리 상품 리스트 조회", notes = "카테고리 상품 조회")
     @GetMapping("/api/product_list/{categoryId}")
-    public Page<ProductListDTO> categoryProduct(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable long categoryId) {
+    public Page<ProductListDTO> categoryProduct(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable String categoryId) {
 
         return productService.categoryProduct(pageable, categoryId);
     }

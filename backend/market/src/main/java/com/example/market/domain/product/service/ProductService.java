@@ -1,10 +1,7 @@
 package com.example.market.domain.product.service;
 
 
-import com.example.market.domain.category.Category;
-import com.example.market.domain.category.CategoryDto;
 import com.example.market.domain.category.CategoryRepository;
-import com.example.market.domain.product.Product;
 import com.example.market.domain.product.dto.ProductDetailsDTO;
 import com.example.market.domain.product.dto.ProductListDTO;
 import com.example.market.domain.product.repository.ProductRepository;
@@ -15,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,18 +40,8 @@ public class ProductService {
     }
 
 
-    public Page<ProductListDTO> categoryProduct(Pageable pageable, long categoryId) {
-        Category category = categoryRepository.getById(categoryId);
-
-        List<Long> categoryList = new ArrayList<>();
-        categoryList.add(categoryId);
-        while (category.getParentId() != null) {
-            categoryList.add(category.getParentId());
-            category = categoryRepository.getById(category.getParentId());
-
-        }
-
-        Page<ProductListDTO> products = productRepository.findByCategory_CategoryIdIsInOrderByUploadDateDesc(categoryList, pageable).map(ProductListDTO::new);
+    public Page<ProductListDTO> categoryProduct(Pageable pageable, String categoryId) {
+        Page<ProductListDTO> products = productRepository.findByCategory_CategoryIdStartsWithOrderByUploadDateDesc(categoryId, pageable).map(ProductListDTO::new);
         return products;
     }
 
@@ -65,5 +50,6 @@ public class ProductService {
 
         return productDetailsDTO;
     }
+
 
 }
