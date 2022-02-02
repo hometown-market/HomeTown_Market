@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -43,7 +44,7 @@ public class ProductController {
 
     @ApiOperation(value = "카테고리 상품 리스트 조회", notes = "카테고리 상품 조회")
     @GetMapping("/api/product_list/{categoryId}")
-    public Page<ProductListDTO> categoryProduct(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable String categoryId) {
+    public List<Object> categoryProduct(@PageableDefault(size = 20, sort = "uploadDate", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable String categoryId) {
 
         return productService.categoryProduct(pageable, categoryId);
     }
