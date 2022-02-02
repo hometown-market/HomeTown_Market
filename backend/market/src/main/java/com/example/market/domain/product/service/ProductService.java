@@ -2,6 +2,7 @@ package com.example.market.domain.product.service;
 
 
 import com.example.market.domain.category.CategoryRepository;
+import com.example.market.domain.product.dto.ProductCategoryCountDto;
 import com.example.market.domain.product.dto.ProductDetailsDTO;
 import com.example.market.domain.product.dto.ProductListDTO;
 import com.example.market.domain.product.repository.ProductRepository;
@@ -12,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,9 +43,13 @@ public class ProductService {
     }
 
 
-    public Page<ProductListDTO> categoryProduct(Pageable pageable, String categoryId) {
+    public List<Object> categoryProduct(Pageable pageable, String categoryId) {
         Page<ProductListDTO> products = productRepository.findByCategory_CategoryIdStartsWithOrderByUploadDateDesc(categoryId, pageable).map(ProductListDTO::new);
-        return products;
+        List<ProductCategoryCountDto> productCategoryCountDtos = productRepository.CountByCategoryId(categoryId);
+        List<Object> pageWithCounts = new ArrayList<>();
+        pageWithCounts.add(products);
+        pageWithCounts.add(productCategoryCountDtos);
+        return pageWithCounts;
     }
 
     public Optional<ProductDetailsDTO> productDetail(long productId) {
