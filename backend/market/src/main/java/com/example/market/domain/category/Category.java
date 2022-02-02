@@ -16,16 +16,21 @@ import java.util.List;
 public class Category {
 
     @Id
-    private Long categoryId;
+    private String categoryId;
 
     private String categoryName;
-    private Long parentId;
+    private String parentId;
 
 
     @OneToMany(mappedBy = "category")
     private List<Product> productList;
 
-    public Category(Long categoryId, String categoryName, Long parentId) {
+    @Transient
+    public List<Long> childIdList;
+
+
+
+    public Category(String categoryId, String categoryName, String parentId) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.parentId = parentId;

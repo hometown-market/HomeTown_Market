@@ -10,12 +10,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
-import java.util.List;
 
 
 @Repository
 public interface
 ProductRepository extends JpaRepository<Product, Long> {
+    @Query("select p from Product p where p.category.categoryId like concat(?1, '%') order by p.uploadDate DESC")
+    Page<Product> findByCategory_CategoryIdStartsWithOrderByUploadDateDesc(String categoryId, Pageable pageable);
 
     @Query(value = "SELECT * FROM product WHERE LIKE '%keyword%' ORDER BY DESC", nativeQuery = true)
     Page<Product> findByTitle(String keyword, Pageable pageable);

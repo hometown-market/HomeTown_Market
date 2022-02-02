@@ -9,12 +9,12 @@ import java.util.List;
 @Setter
 public class CategoryDto {
 
-    private long categoryId;
+    private String categoryId;
     private String categoryName;
-    private long parentId;
+    private String parentId;
     private List<CategoryDto> subCategories;
 
-    public CategoryDto(long categoryId, String categoryName, Long parentId) {
+    public CategoryDto(String categoryId, String categoryName, String parentId) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.parentId = parentId;
