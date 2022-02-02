@@ -17,18 +17,11 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public List<CategoryDto> categoryList(long categoryId) {
-        List<CategoryDto> categoryGroup = new ArrayList<>();
-        for (Category c : categoryRepository.findAll()) {
-            while(c.getParentId()!=null) {
-                CategoryDto categories = new CategoryDto(c.getCategoryId(), c.getCategoryName(), c.getParentId());
-                if(categories.getParentId() == categoryId) {
-                    categoryGroup.add(categories);
-
-                }
-            }
-
+        List<CategoryDto> categoryDtos = new ArrayList<>();
+        for (Category c : categoryRepository.findByParentId(categoryId)) {
+            CategoryDto categoryDto = new CategoryDto(c.getCategoryId(), c.getCategoryName(), c.getParentId());
+            categoryDtos.add(categoryDto);
         }
-        return categoryGroup;
-
+        return categoryDtos;
     }
 }
