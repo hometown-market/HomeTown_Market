@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, String> {
-    @Query(value = "select c.categoryId from Category as c where c.categoryId like ':categoryId%'")
+    @Query(value = "select c.parentId from Category as c where c.parentId like ':categoryId'")
     List<String> findChildId(String categoryId);
 
 
