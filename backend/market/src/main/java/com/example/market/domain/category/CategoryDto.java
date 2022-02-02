@@ -1,12 +1,12 @@
 package com.example.market.domain.category;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 public class CategoryDto {
 
     private String categoryId;
