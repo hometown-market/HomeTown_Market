@@ -1,6 +1,7 @@
 package com.example.market.domain.product.service;
 
 
+import com.example.market.domain.category.Category;
 import com.example.market.domain.category.CategoryDto;
 import com.example.market.domain.category.CategoryRepository;
 import com.example.market.domain.product.dto.ProductCategoryCountDto;
@@ -47,7 +48,7 @@ public class ProductService {
     public List<Object> categoryProduct(Pageable pageable, String categoryId) {
         Page<ProductListDTO> products = productRepository.findByCategory_CategoryIdStartsWithOrderByUploadDateDesc(categoryId, pageable).map(ProductListDTO::new);
         List<ProductCategoryCountDto> productCategoryCountDtos = productRepository.CountByCategoryId(categoryId);
-        List<String> categoryDtoList = categoryRepository.findChildName(categoryId);
+        List<CategoryDto> categoryDtoList = categoryRepository.findCategory(categoryId);
         List<Object> pageWithCounts = new ArrayList<>();
         pageWithCounts.add(products);
         pageWithCounts.add(productCategoryCountDtos);

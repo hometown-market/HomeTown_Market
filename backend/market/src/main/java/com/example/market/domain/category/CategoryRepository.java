@@ -8,8 +8,8 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, String> {
-    @Query(value = "select c.categoryName from Category as c where c.parentId like ':categoryId'")
-    List<String> findChildName(String categoryId);
+    @Query(value = "select new com.example.market.domain.category.CategoryDto(c.categoryId, c.categoryName, c.parentId) from Category as c where c.parentId like ':categoryId'")
+    List<CategoryDto> findCategory(String categoryId);
 
 
 }
