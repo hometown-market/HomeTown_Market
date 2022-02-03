@@ -49,9 +49,12 @@ public class ProductService {
         Page<ProductListDTO> products = productRepository.findByCategory_CategoryIdStartsWithOrderByUploadDateDesc(categoryId, pageable).map(ProductListDTO::new);
         List<ProductCategoryCountDto> productCategoryCountDtos = productRepository.CountByCategoryId(categoryId);
         List<CategoryDto> categoryDtoList = categoryRepository.findCategory(categoryId);
+        Category category = categoryRepository.getById(categoryId);
+        CategoryDto categoryDto = new CategoryDto(category.getCategoryId(), category.getCategoryName(), category.getParentId());
         List<Object> pageWithCounts = new ArrayList<>();
         pageWithCounts.add(products);
         pageWithCounts.add(productCategoryCountDtos);
+        pageWithCounts.add(categoryDto);
         pageWithCounts.add(categoryDtoList);
         return pageWithCounts;
     }
