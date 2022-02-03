@@ -48,7 +48,7 @@ public class ProductService {
     public List<Object> categoryProduct(Pageable pageable, String categoryId) {
         Page<ProductListDTO> products = productRepository.findByCategory_CategoryIdStartsWithOrderByUploadDateDesc(categoryId, pageable).map(ProductListDTO::new);
         List<ProductCategoryCountDto> productCategoryCountDtos = productRepository.CountByCategoryId(categoryId);
-        List<Category> categoryDtoList = categoryRepository.findCategory(categoryId);
+        List<CategoryDto> categoryDtoList = categoryRepository.findCategory(categoryId);
         List<Object> pageWithCounts = new ArrayList<>();
         pageWithCounts.add(products);
         pageWithCounts.add(productCategoryCountDtos);
