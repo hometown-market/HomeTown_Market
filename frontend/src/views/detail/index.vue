@@ -30,9 +30,7 @@
   </div>
 </template>
 <script>
-// import { Rest, RestUrl } from '@/modules/Rest.js'
-import productData from '@/assets/product.json'
-
+import { Rest, RestUrl } from '@/modules/Rest.js'
 export default {
   name: 'Detail',
   components: {
@@ -71,9 +69,8 @@ export default {
     },
     async fetchProductInfo () {
       try {
-        // const response = await Rest.get(`${RestUrl.ProductDetail}` + `${this.productId}`)
-        // this.productInfo = response.data
-        this.productInfo = productData
+        const response = await Rest.get(RestUrl.ProductDetail.replace(':productId', this.productId))
+        this.productInfo = response.data
       } catch (error) {
         console.log(error)
         alert(error)

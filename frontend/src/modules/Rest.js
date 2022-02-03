@@ -5,8 +5,9 @@ import Axios from 'axios'
 
 const RestUrl = {
   ProductList: '/api/product_list/',
+  CategoryProductList: '/api/product_list/:categoryId',
   SearchProductList: '/api/search/products/',
-  ProductDetail: '/product/',
+  ProductDetail: '/product/:productId',
   emailCheck: '/api/v1/emailCheck'
 }
 
