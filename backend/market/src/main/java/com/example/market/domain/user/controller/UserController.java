@@ -4,8 +4,11 @@ import com.example.market.domain.user.User;
 import com.example.market.domain.user.dto.UserEmailRequest;
 import com.example.market.domain.user.dto.UserJoinRequest;
 import com.example.market.domain.user.service.UserService;
+import com.example.market.global.security.util.JwtTokenUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,20 +26,19 @@ public class UserController {
 
 
     private final UserService userService;
-
+    private final JwtTokenUtil jwtTokenUtil;
 
     @ApiOperation(value = "회원 가입", notes = "회원 가입")
     @PostMapping("/join")
-    public User loign(@Valid @RequestBody UserJoinRequest userJoinRequest) {
+    public String join(@Valid @RequestBody UserJoinRequest userJoinRequest, HttpServletResponse response) throws IOException {
+
         User join = userService.join(userJoinRequest);
+
+        SecurityContextHolder.createEmptyContext().setAuthentication(new UsernamePasswordAuthenticationToken(join.getEmail(), join.getPassword()));
+        String token = jwtTokenUtil.generateToken(join);
+        token = "Bearer " + token;
+        response.addHeader("Authorization", token);
         return null;
-    }
-
-    @ApiOperation(value = "로그인 요청", notes = "로그인 요청")
-    @PostMapping("/login/")
-    public String login() {
-
-        return "ok";
     }
 
     @GetMapping("/test")

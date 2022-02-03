@@ -36,7 +36,7 @@ public class GoogleUserInfo extends CustomUserInfo {
 
     @Override
     public String getNameAttributeKey() {
-        return getEmail();
+        return "email";
     }
 
     @Override
