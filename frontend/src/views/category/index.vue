@@ -1,13 +1,13 @@
 <template>
   <div class="category-container">
     <div class="category-header">
-      {{ categoryList.label }}
+      {{ categoryList.categoryName }}
       <hm-ui-icon name="icon-back-bk" class="btn-back" @icon-click="onClickBackIcon"></hm-ui-icon>
     </div>
     <div class="category-list-container" v-if="categoryList">
       <ul>
-        <li class="category-item" v-for="(item, index) in categoryList.subCategories" :key="index" @click="onClickItem(item.categoryId)">
-          <span>{{ item.label }}</span>
+        <li class="category-item" v-for="(item, index) in subCategories" :key="index" @click="onClickItem(item.categoryId)">
+          <span>{{ item.categoryName }}</span>
           <span>25</span>
         </li>
       </ul>
@@ -17,9 +17,9 @@
   </div>
 </template>
 <script>
+import { Rest, RestUrl } from '@/modules/Rest.js'
 import ProductList from '@/components/product-list'
-import productList from '@/assets/productList.json'
-import categoryList from '@/assets/categoryList.json'
+// import categoryList from '@/assets/categoryList.json'
 
 export default {
   name: 'SearchResults',
@@ -38,27 +38,36 @@ export default {
   created () {
     this.keyword = this.$route.query.keyword
     this.fetchProductList()
-    this.fetchCategoryList()
   },
   data () {
     return {
       productList: [],
       total: undefined,
       order: undefined,
-      categoryList: {}
+      categoryList: {},
+      subCategories: []
+    }
+  },
+  computed: {
+    categortId () {
+      return this.$route.query.category_id
     }
   },
   methods: {
     onClickBackIcon () {
       this.$router.go(-1)
     },
-    fetchProductList () {
-      // axios get product_list?recent_type=99&uid=00000000000&order=date
-      this.total = 30
-      this.productList = productList
-    },
-    fetchCategoryList () {
-      this.categoryList = categoryList
+    async fetchProductList () {
+      try {
+        const response = await Rest.get(RestUrl.CategoryProductList.replace(':categoryId', this.categortId))
+        this.productList = response.data[0].content
+        this.total = response.data[0].totalElements
+        this.categoryList = response.data[2]
+        this.subCategories = response.data[3]
+      } catch (error) {
+        console.log(error)
+        alert(error)
+      }
     },
     onClickItem (id) {
       this.$router.replace({

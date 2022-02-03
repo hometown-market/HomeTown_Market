@@ -14,8 +14,7 @@
 </template>
 <script>
 import ProductList from '@/components/product-list'
-// import { Rest, RestUrl } from '@/modules/Rest.js'
-import productListData from '@/assets/productList.json/'
+import { Rest, RestUrl } from '@/modules/Rest.js'
 
 export default {
   name: 'SearchResults',
@@ -65,11 +64,9 @@ export default {
     },
     async fetchProductList () {
       try {
-        // const response = await Rest.get(`${RestUrl.SearchProductList}` + `?keyword=${this.keyword}&page=0`)
-        // this.productList = response.data.content
-        // this.total = response.data.totalElements
-        this.total = 12560
-        this.productList = productListData
+        const response = await Rest.get(`${RestUrl.SearchProductList}` + `?keyword=${this.keyword}&page=0`)
+        this.productList = response.data.content
+        this.total = response.data.totalElements
       } catch (error) {
         console.log(error)
         alert(error)
