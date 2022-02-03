@@ -67,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(OAuth2LoginSuccessHandler)
                 .loginPage("/login")
                 .authorizationEndpoint()
-                .baseUri("/login/oauth")
+                .baseUri("/login")
                 .and()
                 .userInfoEndpoint()
                 .userService(oAuthService);
