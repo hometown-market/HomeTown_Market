@@ -5,9 +5,9 @@
     <div v-if="loggedIn === false">
       <button class="login" @click="login">로그인</button>
     </div>
-    <div v-else>
-      <button class="login" @click="logout">로그아웃</button>
+    <div v-else style="display: flex">
       <hm-ui-icon name="icon-user-bk" @icon-click="onMyshop"></hm-ui-icon>
+      <button class="login" @click="logout">로그아웃</button>
     </div>
   </header>
 </template>
@@ -20,12 +20,18 @@ export default {
       loggedIn: false
     }
   },
-  created () {
-    if (localStorage.getItem('access_token') !== null) {
-      this.loggedIn = true
-    } else {
-      this.loggedIn = false
+  watch: {
+    '$route.query': {
+      deep: true,
+      handler (val) {
+        if (val.login) {
+          this.checkIsLogin()
+        }
+      }
     }
+  },
+  created () {
+    this.checkIsLogin()
   },
   methods: {
     login () {
@@ -40,6 +46,13 @@ export default {
     },
     onMyshop () {
       this.$router.push('/shop')
+    },
+    checkIsLogin () {
+      if (localStorage.getItem('access_token') !== null) {
+        this.loggedIn = true
+      } else {
+        this.loggedIn = false
+      }
     }
   }
 }

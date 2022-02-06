@@ -23,7 +23,7 @@ export default new Vuex.Store({
         .then((res) => {
           const token = res.headers.authorization
           commit('settoken', { token })
-          router.go(-1)
+          router.push('/?login=true')
         })
         .catch(() => {
           alert('아이디와 비밀번호를 확인해 주세요.')
