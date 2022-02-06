@@ -2,12 +2,12 @@
   <header>
     <hm-ui-icon name="icon-bars-bk" @icon-click="onClickMenuIcon"></hm-ui-icon>
     <div><router-link to="/"><img src="@/assets/logo/logo-main.svg"/></router-link></div>
-    <div v-if="login && state === false">
-      <button class="login" @click="onClickLogin">로그인</button>
+    <div v-if="loggedIn === false">
+      <button class="login" @click="login">로그인</button>
     </div>
-    <div v-else-if="!login || status !== false" style="diplay: flex;">
-      <button class="login" @click="onLogout">로그아웃</button>
-      <hm-ui-icon name="icon-user-bk" @icon-click="onIconClick"></hm-ui-icon>
+    <div v-else>
+      <button class="login" @click="logout">로그아웃</button>
+      <hm-ui-icon name="icon-user-bk" @icon-click="onMyshop"></hm-ui-icon>
     </div>
   </header>
 </template>
@@ -15,31 +15,31 @@
 <script>
 export default {
   name: 'Header',
-  components: {
-  },
   data () {
     return {
-      state: false
+      loggedIn: false
+    }
+  },
+  created () {
+    if (localStorage.getItem('access_token') !== null) {
+      this.loggedIn = true
+    } else {
+      this.loggedIn = false
     }
   },
   methods: {
-    onClickLogin () {
+    login () {
       this.$eventBus.$emit('showLoginModal')
     },
     onClickMenuIcon () {
       this.$eventBus.$emit('toggleNavbar', true)
     },
-    onLogout () {
+    logout () {
       this.$store.dispatch('logout')
+      this.$router.go()
     },
-    onIconClick () {
+    onMyshop () {
       this.$router.push('/shop')
-    },
-    login () {
-      this.state = false
-      if (localStorage.getItem('access_token') !== '') {
-        this.state = true
-      }
     }
   }
 }
