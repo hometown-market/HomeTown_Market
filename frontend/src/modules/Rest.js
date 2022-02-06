@@ -8,7 +8,7 @@ const RestUrl = {
   CategoryProductList: '/api/product_list/:categoryId',
   SearchProductList: '/api/search/products/',
   ProductDetail: '/product/:productId',
-  emailCheck: '/api/v1/emailCheck'
+  emailCheck: '/api/login/email-check'
 }
 
 const getConfig = () => {
