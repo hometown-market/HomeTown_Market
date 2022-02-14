@@ -131,24 +131,20 @@ export default {
     },
     async onSubmit0 () {
       const success = await this.$validate('email')
-      const response = await Rest.post(RestUrl.emailCheck, this.email)
+      const response = await Rest.post(RestUrl.emailCheck, { email: this.email })
       if (success) {
-        response
-          .then((res) => {
-            if (res.data.status === true) {
-              this.step = (this.step + 1)
-            } else if (res.data.status === false) {
-              this.error.hasError = true
-              this.error.message = '사용 불가능한 이메일 입니다.'
-            }
-          })
-          .catch((err) => {
-            alert(err)
-            // 해당 내용은 api 테스트 완료 이후 제거
+        try {
+          await response
+          if (response.data === true) {
+            this.step = (this.step + 1)
+          } else if (response.data !== true) {
             this.error.hasError = true
             this.error.message = '사용 불가능한 이메일 입니다.'
-            this.step = (this.step + 1)
-          })
+          }
+        } catch {
+          this.error.hasError = true
+          this.error.message = '사용 불가능한 이메일 입니다.'
+        }
       }
     },
     async onSubmit1 () {
@@ -174,9 +170,10 @@ export default {
       const signupObj = {
         email: this.email,
         password: this.password,
-        checkpassword: this.checkpassword,
         phone: this.phone,
-        address: this.address
+        address: this.address,
+        name: '',
+        role: ''
       }
       if (success) {
         this.$store.dispatch('signup', signupObj)

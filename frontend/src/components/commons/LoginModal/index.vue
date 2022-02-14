@@ -5,15 +5,15 @@
         <div class="close-modal" @click="$emit('close-modal')"><img src="@/assets/icons/icon-close-bk.svg"/></div>
         <div class="title">우동마켓</div>
         <div class="btn-list">
-          <button class="btn-style" href="http://15.165.216.62:8080/api/oauth/google">
+          <button class="btn-style" @click="loginGoogle">
             <img class="btn-image" src="@/assets/logo/logo-google.svg"/>
             구글로 시작하기
           </button>
-          <button class="btn-style" href="http://15.165.216.62:8080/api/oauth/naver">
+          <button class="btn-style" @click="loginNaver">
             <img class="btn-image" src="@/assets/logo/logo-naver.svg"/>
             네이버로 시작하기
           </button>
-          <button class="btn-style" href="http://15.165.216.62:8080/api/oauth/facebook">
+          <button class="btn-style" @click="loginFacebook">
             <img class="btn-image" src="@/assets/logo/logo-facebook.svg"/>
             페이스북으로 시작하기
           </button>
@@ -35,6 +35,15 @@ export default {
         this.$router.push('/login')
         this.$emit('close-modal')
       }
+    },
+    loginGoogle () {
+      window.open('http://15.165.216.62:8080/login/google')
+    },
+    loginNaver () {
+      window.open('http://15.165.216.62:8080/login/naver')
+    },
+    loginFacebook () {
+      window.open('http://15.165.216.62:8080/login/facebook')
     }
   }
 }

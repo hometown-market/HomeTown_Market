@@ -1,47 +1,48 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+import Axios from 'axios'
 import router from '@/router'
 
-Vue.use(Vuex)
+Axios.defaults.baseURL = 'http://15.165.216.62:8080'
+Axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
+Axios.defaults.headers['Access-Control-Allow-Origin'] = '*'
 
+Vue.use(Vuex)
 export default new Vuex.Store({
-  state: {
-  },
+  state: {},
   mutations: {
     logout () {
       localStorage.removeItem('access_token')
-      // location.reload()
+      router.push('/').catch(() => {})
+    },
+    settoken (state, { token }) {
+      localStorage.setItem('access_token', token)
     }
   },
   actions: {
     // 로그인 시도
-    login (loginObj) {
-      axios
-        .post('https://15.165.216.62:8080/api/login', loginObj)
+    login ({ commit }, loginObj) {
+      Axios
+        .post('/login', loginObj)
         .then((res) => {
-          const token = res.data.token
-          console.log(token)
-          localStorage.setItem('access_token', token)
-          router.go(-1)
+          const token = res.headers.authorization
+          commit('settoken', { token })
+          router.push('/?login=true')
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
           alert('아이디와 비밀번호를 확인해 주세요.')
         })
     },
     // 회원가입 시도
-    signup (signupObj) {
-      axios
-        .post('http://localhost:8080/api/v1/signup', signupObj)
+    signup ({ commit }, signupObj) {
+      Axios
+        .post('/join', signupObj)
         .then(res => {
-          const token = res.data.token
-          // console.log(token)
-          localStorage.setItem('access_token', token)
+          const token = res.headers.authorization
+          commit('settoken', { token })
           router.go(-2)
         })
-        .catch((err) => {
-          console.log(err)
+        .catch(() => {
           alert('회원가입에 실패하였습니다.')
           router.push('/signup')
         })
@@ -49,7 +50,6 @@ export default new Vuex.Store({
     // 로그아웃
     logout ({ commit }) {
       commit('logout')
-      router.push('/').catch(() => {})
     }
   },
   modules: {

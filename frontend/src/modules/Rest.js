@@ -8,11 +8,11 @@ const RestUrl = {
   CategoryProductList: '/api/product_list/:categoryId',
   SearchProductList: '/api/search/products/',
   ProductDetail: '/product/:productId',
-  emailCheck: '/api/v1/emailCheck'
+  emailCheck: '/api/login/email-check'
 }
 
 const getConfig = () => {
-  const config = { headers: { 'Content-Type': 'application/json' }, withCredentials: true }
+  const config = { headers: { 'Content-Type': 'application/json;charset=utf-8' }, withCredentials: true }
   // const config = { headers: { 'Content-Type': 'application/json' } }
   // const accessToken = Session.getAccessToken() // localStorage
   const accessToken = ''
