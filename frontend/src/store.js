@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+import Axios from 'axios'
 import router from '@/router'
+
+Axios.defaults.baseURL = 'http://15.165.216.62:8080'
+Axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
+Axios.defaults.headers['Access-Control-Allow-Origin'] = '*'
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -18,7 +22,7 @@ export default new Vuex.Store({
   actions: {
     // 로그인 시도
     login ({ commit }, loginObj) {
-      axios
+      Axios
         .post('/login', loginObj)
         .then((res) => {
           const token = res.headers.authorization
@@ -31,7 +35,7 @@ export default new Vuex.Store({
     },
     // 회원가입 시도
     signup ({ commit }, signupObj) {
-      axios
+      Axios
         .post('/join', signupObj)
         .then(res => {
           const token = res.headers.authorization
