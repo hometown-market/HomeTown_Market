@@ -1,28 +1,28 @@
 [
   {
-    "categoryId": "01",
+    "categoryId": "10",
     "label": "남성의류",
     "subcategories": [
       {
-        "categoryId": "0101",
+        "categoryId": "1010",
         "label": "코트",
         "subcategories": [
           {
-            "categoryId": "010101",
+            "categoryId": "101010",
             "label": "트렌치코트"
           },
           {
-            "categoryId": "010102",
+            "categoryId": "101020",
             "label": "두꺼운코트"
           },
           {
-            "categoryId": "010103",
+            "categoryId": "101030",
             "label": "가을코트"
           }
         ]
       },
       {
-        "categoryId": "0102",
+        "categoryId": "1020",
         "label": "코트2",
         "subcategories": [
           {
