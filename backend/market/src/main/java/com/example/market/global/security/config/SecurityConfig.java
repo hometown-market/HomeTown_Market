@@ -76,6 +76,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
         http.addFilterAfter(new JwtAuthorizeFilter(authenticationManager(), jwtTokenUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
 
-
+        configuration.addAllowedOrigin("*");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
     }
 }
