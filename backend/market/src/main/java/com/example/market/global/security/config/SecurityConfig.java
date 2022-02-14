@@ -1,5 +1,6 @@
 package com.example.market.global.security.config;
 
+import com.example.market.domain.user.repository.TokenRepository;
 import com.example.market.domain.user.service.OAuthService;
 import com.example.market.domain.user.service.UserDetailsServiceImpl;
 import com.example.market.global.security.filter.JwtAuthenticationFilter;
@@ -19,12 +20,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final TokenRepository tokenRepository;
     private final UserDetailsServiceImpl userDetailsService;
     private final OAuthService oAuthService;
     private final JwtTokenUtil jwtTokenUtil;
@@ -73,9 +78,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userService(oAuthService);
 
 
-        http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), jwtTokenUtil), UsernamePasswordAuthenticationFilter.class);
-        http.addFilterAfter(new JwtAuthorizeFilter(authenticationManager(), jwtTokenUtil, userDetailsService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), jwtTokenUtil, tokenRepository), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(new JwtAuthorizeFilter(authenticationManager(), jwtTokenUtil, userDetailsService, tokenRepository), UsernamePasswordAuthenticationFilter.class);
+    }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
 
+        configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
