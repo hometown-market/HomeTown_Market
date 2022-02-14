@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     displayedAt () {
-      const createdAt = this.data.create_time
+      const createdAt = new Date(this.data.uploadDate)
       const milliSeconds = new Date() - createdAt
       const seconds = milliSeconds / 1000
       if (seconds < 60) return '방금 전'
