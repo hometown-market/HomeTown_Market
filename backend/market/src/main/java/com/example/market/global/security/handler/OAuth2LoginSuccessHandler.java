@@ -24,9 +24,11 @@ public class OAuth2LoginSuccessHandler extends SavedRequestAwareAuthenticationSu
 
         Map<String, Object> attributes = ((DefaultOAuth2User) authentication.getPrincipal()).getAttributes();
         Map<String, Object> claim = new HashMap<>(attributes);
-        String jwtToken = jwtTokenUtil.generateToken(claim);
-        response.addHeader("Authorization", "Bearer " + jwtToken);
+        String accessToken = jwtTokenUtil.AccessGenerateToken(claim);
+        String refreshToken = jwtTokenUtil.RefreshGenerateToken(claim);
 
+        response.addHeader("Authorization", "Bearer " + accessToken);
+        jwtTokenUtil.StoreRefreshToken((String) claim.get("email"), refreshToken);
 
         String targetUrl = determineTargetUrl(request, response, authentication);
 
