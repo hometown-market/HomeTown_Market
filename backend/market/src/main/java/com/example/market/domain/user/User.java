@@ -94,6 +94,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<Wish> wishList;
 
+    public void updateData(String newName) {
+        this.name = newName;
+    }
 }
 
 
