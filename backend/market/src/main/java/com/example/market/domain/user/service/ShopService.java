@@ -4,6 +4,8 @@ import com.example.market.domain.product.Product;
 import com.example.market.domain.product.dto.ProductListDTO;
 import com.example.market.domain.product.repository.ProductRepository;
 import com.example.market.domain.product.service.ProductServiceUtil;
+import com.example.market.domain.user.User;
+import com.example.market.domain.user.repository.UserRepository;
 import com.example.market.domain.wish.WishRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,10 +13,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ShopService {
 
+    private final UserRepository userRepository;
     private final WishRepository wishRepository;
     private final ProductRepository productRepository;
     private final ProductServiceUtil serviceUtil;
@@ -37,5 +42,14 @@ public class ShopService {
 
         serviceUtil.ProductListDTOSetWish(products);
         return products;
+    }
+
+    public void changeName(String newName) {
+        long userId = ProductServiceUtil.getAuthentication();
+
+        User user = userRepository.getById(userId);
+        user.updateData(newName);
+
+
     }
 }
