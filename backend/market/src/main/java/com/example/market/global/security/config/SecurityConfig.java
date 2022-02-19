@@ -29,12 +29,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final TokenRepository tokenRepository;
     private final UserDetailsServiceImpl userDetailsService;
     private final OAuthService oAuthService;
     private final JwtTokenUtil jwtTokenUtil;
     private final OAuth2LoginSuccessHandler OAuth2LoginSuccessHandler;
-
+    private final TokenRepository tokenRepository;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -56,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.cors().configurationSource(corsConfigurationSource());
 
         http
                 .formLogin().disable()
@@ -80,13 +80,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(), jwtTokenUtil, tokenRepository), UsernamePasswordAuthenticationFilter.class);
         http.addFilterAfter(new JwtAuthorizeFilter(authenticationManager(), jwtTokenUtil, userDetailsService, tokenRepository), UsernamePasswordAuthenticationFilter.class);
+
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedOrigin("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
@@ -96,3 +97,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return source;
     }
 }
+

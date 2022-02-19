@@ -32,6 +32,7 @@ public class Product {
     private int price;
     private boolean locateAuthorization;
     private long wishCount;
+    private ProductStatus productStatus;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -55,7 +56,7 @@ public class Product {
     }
 
     @Builder
-    public Product(String title, Category category, String productImgUrl, String text, int price, User user, boolean locateAuthorization) {
+    public Product(String title, Category category, String productImgUrl, String text, int price, User user, boolean locateAuthorization, ProductStatus productStatus) {
         this.title = title;
         this.category = category;
         this.productImgUrl = productImgUrl;
@@ -63,6 +64,7 @@ public class Product {
         this.price = price;
         this.user = user;
         this.locateAuthorization = locateAuthorization;
+        this.productStatus = productStatus;
     }
 
 }
