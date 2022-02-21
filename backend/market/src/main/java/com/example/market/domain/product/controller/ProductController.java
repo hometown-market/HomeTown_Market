@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,8 +63,9 @@ public class ProductController {
 
     @ApiOperation(value = "상품 등룍")
     @PostMapping("/products/new")
-    public String newProducts(ProductUploadDto productUploadDto, MultipartFile multipartFile, RedirectAttributes redirectAttributes, Authentication authentication) {
+    public String newProducts(ProductUploadDto productUploadDto, @RequestParam("productImgUrl") MultipartFile multipartFile, RedirectAttributes redirectAttributes, Authentication authentication) throws IOException, IllegalStateException {
         productService.saveImage(productUploadDto, multipartFile);
+        redirectAttributes.addAttribute("user", authentication.getName());
         return "redirect:/";
     }
 }

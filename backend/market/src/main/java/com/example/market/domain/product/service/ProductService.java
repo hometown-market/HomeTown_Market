@@ -38,7 +38,8 @@ public class ProductService {
     private final ProductServiceUtil serviceUtil;
     private final CategoryRepository categoryRepository;
 
-    private String uploadImageUrl = "";
+    @Value("${uploadImg.path}")
+    private String productImgUrl;
 
     public Page<ProductListDTO> search(String keyword, Pageable pageable) {
         Page<ProductListDTO> products = productRepository.findByTitleContainsOrderByUploadDateDesc(keyword, pageable).map(ProductListDTO::new);
@@ -87,7 +88,7 @@ public class ProductService {
 
         UUID uuid = UUID.randomUUID();
         String imgFileName = uuid + "_" + multipartFile.getOriginalFilename();
-        Path imageFilePath = Paths.get(uploadImageUrl + imgFileName);
+        Path imageFilePath = Paths.get(productImgUrl + imgFileName);
         try {
             Files.write(imageFilePath, multipartFile.getBytes());
         } catch (Exception e) {
