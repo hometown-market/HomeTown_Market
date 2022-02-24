@@ -2,6 +2,7 @@ package com.example.market.domain.product.controller;
 
 import com.example.market.domain.product.dto.ProductDetailsDTO;
 import com.example.market.domain.product.dto.ProductListDTO;
+import com.example.market.domain.product.dto.ProductUploadDto;
 import com.example.market.domain.product.service.ProductService;
 import com.example.market.domain.wish.WishService;
 import io.swagger.annotations.ApiOperation;
@@ -11,9 +12,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,7 +63,9 @@ public class ProductController {
 
     @ApiOperation(value = "상품 등룍")
     @PostMapping("/products/new")
-    public ResponseEntity<String> newProducts() {
-        return null;
+    public String newProducts(ProductUploadDto productUploadDto, @RequestParam("productImgUrl") MultipartFile multipartFile, RedirectAttributes redirectAttributes, Authentication authentication) throws IOException, IllegalStateException {
+        productService.saveImage(productUploadDto, multipartFile);
+        redirectAttributes.addAttribute("user", authentication.getName());
+        return "redirect:/";
     }
 }
