@@ -11,6 +11,7 @@ import SearchResults from '@/views/search-results/index.vue'
 import Category from '@/views/category/index.vue'
 import Detail from '@/views/detail/index.vue'
 import Shop from '@/views/shop/index.vue'
+import Wish from '@/views/wish/index.vue'
 
 import Component from '@/views/component/index.vue'
 
@@ -68,6 +69,12 @@ const routes = [
         name: 'shop',
         path: '/shop',
         component: Shop
+      },
+      {
+        // 내 찜목록
+        name: 'wish',
+        path: '/wish',
+        component: Wish
       },
       {
         // (임시) 컴포넌트

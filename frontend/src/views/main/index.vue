@@ -46,7 +46,7 @@ export default {
       // 로그인 유무 파악해서
       // 로그인 O -> alert => 내 찜정보 페이지가 준비중입니다.
       // 로그인 X -> 로그인 모달 띄우기
-      alert('search like icon click')
+      this.$router.push({ name: 'wish' })
     },
     onClickReadonly () {
       this.$router.push({

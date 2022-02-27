@@ -7,6 +7,8 @@ const RestUrl = {
   ProductList: '/api/product_list/',
   CategoryProductList: '/api/product_list/:categoryId',
   SearchProductList: '/api/search/products/',
+  WishProductList: '/shop/wish',
+  Wish: '/api/products/wish/:productId',
   ProductDetail: '/product/:productId',
   emailCheck: '/api/login/email-check'
 }
@@ -14,10 +16,9 @@ const RestUrl = {
 const getConfig = () => {
   const config = { headers: { 'Content-Type': 'application/json;charset=utf-8' }, withCredentials: true }
   // const config = { headers: { 'Content-Type': 'application/json' } }
-  // const accessToken = Session.getAccessToken() // localStorage
-  const accessToken = ''
+  const accessToken = localStorage.getItem('access_token') // localStorage
   if (accessToken) {
-    config.headers['Access-Token'] = accessToken
+    config.headers.Authorization = accessToken
   }
   config.headers['Access-Control-Allow-Origin'] = '*'
   config.headers['Access-Control-Allow-Headers'] = '*'
