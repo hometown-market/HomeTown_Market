@@ -18,10 +18,11 @@
 
       </div>
     </div>
-    <hm-ui-icon class="btn-like" name="icon-like-off" @icon-click="onClickLikeIcon"/>
+    <hm-ui-icon class="btn-like" :name="likeIconName" @icon-click="onClickLikeIcon"/>
   </div>
 </template>
 <script>
+import { Rest, RestUrl } from '@/modules/Rest.js'
 
 export default {
   name: 'ProductItem',
@@ -51,6 +52,13 @@ export default {
       if (months < 12) return `${Math.floor(months)}개월 전`
       const years = days / 365
       return `${Math.floor(years)}년 전`
+    },
+    likeIconName () {
+      if (this.data.wish) {
+        return 'icon-like-on'
+      } else {
+        return 'icon-like-off'
+      }
     }
   },
   methods: {
@@ -62,12 +70,18 @@ export default {
         }
       })
     },
-    onClickLikeIcon () {
-      const answer = confirm('로그인 후 찜기능을 사용할 수 있습니다. 로그인 하시겠습니까?')
-      if (answer) {
-        // 로그인 모달
-        this.$eventBus.$emit('showLoginModal')
-        return false
+    async onClickLikeIcon () {
+      // const answer = confirm('로그인 후 찜기능을 사용할 수 있습니다. 로그인 하시겠습니까?')
+      // if (answer) {
+      //   // 로그인 모달
+      //   this.$eventBus.$emit('showLoginModal')
+      //   return false
+      // }
+      try {
+        await Rest.post(RestUrl.Wish.replace(':productId', this.data.id))
+      } catch (error) {
+        console.log(error)
+        alert(error)
       }
     },
     numberWithCommas (x) {
