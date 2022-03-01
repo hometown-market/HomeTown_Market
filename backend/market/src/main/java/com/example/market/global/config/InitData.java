@@ -19,8 +19,8 @@ public class InitData {
         this.productRepository = productRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
-        initProduct();
-        initUser();
+//        initProduct();
+//        initUser();
     }
 
     private void createProduct(Category category) {

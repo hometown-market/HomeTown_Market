@@ -77,7 +77,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue
     @Column(name = "user_id")
-    private long id;
+    private Long id;
 
     private String email;
     private String password;
@@ -94,7 +94,8 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<Wish> wishList;
 
-    public void updateData(String newName) {
+    public void updateData(String newName, String profileImgUrl) {
+        this.profileImgUrl = profileImgUrl;
         this.name = newName;
     }
 }

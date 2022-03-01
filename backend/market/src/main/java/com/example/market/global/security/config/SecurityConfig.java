@@ -65,6 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/join").permitAll()
                 .antMatchers("/test").authenticated()
+                .antMatchers("/shop/**").authenticated()
+
                 .antMatchers(HttpMethod.POST, "/api/products/wish/**").authenticated();
 
 

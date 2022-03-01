@@ -29,18 +29,10 @@ public class ShopController {
 
     }
 
-    @ApiOperation("이름 변경")
-    @PostMapping("/api/shop/name/change")
-    public String changeName(@RequestBody String newName) {
-        shopService.changeName(newName);
+    @ApiOperation("정보 변경")
+    @PostMapping("/api/shop/change")
+    public String changeName(@RequestBody String newName, @RequestPart MultipartFile newPicture) {
+        shopService.change(newName, newPicture);
         return newName;
-    }
-
-
-    @ApiOperation("프사 변경")
-    @PostMapping("/api/shop/picture/change")
-    public MultipartFile changePicture(@RequestPart MultipartFile newPicture) {
-
-        return null;
     }
 }

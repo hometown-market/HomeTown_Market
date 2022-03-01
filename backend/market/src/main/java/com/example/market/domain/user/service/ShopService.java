@@ -12,8 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -37,19 +36,16 @@ public class ShopService {
     public Page<ProductListDTO> ShopProducts() {
         long userId = ProductServiceUtil.getAuthentication();
         PageRequest pageRequest = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "uploadDate"));
-        Page<Product> page = productRepository.findByUser_Id(userId, pageRequest);
+        Page<Product> page = productRepository.findByUser_IdAndProductStatus(userId, null,pageRequest);
         Page<ProductListDTO> products = page.map(ProductListDTO::new);
 
         serviceUtil.ProductListDTOSetWish(products);
         return products;
     }
 
-    public void changeName(String newName) {
+    public void change(String newName, MultipartFile newPicture) {
         long userId = ProductServiceUtil.getAuthentication();
 
         User user = userRepository.getById(userId);
-        user.updateData(newName);
-
-
     }
 }
