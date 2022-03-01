@@ -19,7 +19,7 @@ public class Wish {
 
     @Id
     @GeneratedValue
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "product_id")

@@ -21,7 +21,7 @@ public class Product {
     @GeneratedValue
     @Column(name = "product_id")
 
-    private long id;
+    private Long id;
 
     private String title;
     @Column(name = "upload_date")

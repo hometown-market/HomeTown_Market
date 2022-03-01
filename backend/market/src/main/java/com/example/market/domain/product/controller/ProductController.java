@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,8 +25,8 @@ public class ProductController {
 
     @ApiOperation(value = "상품 찜", notes = "상품 찜")
     @PostMapping("/api/products/wish/{productId}")
-    public void wishing(@PathVariable long productId) {
-        wishService.wishing(productId);
+    public boolean wishing(@PathVariable long productId) {
+        return wishService.wishing(productId);
     }
 
     @ApiOperation(value = "상품 리스트 조회", notes = "상품 리스트 조회")
@@ -53,8 +52,9 @@ public class ProductController {
 
     @ApiOperation(value = "상품 조회", notes = "상품 조회")
     @GetMapping("/product/{productId}")
-    public Optional<ProductDetailsDTO> productDetail(@PathVariable long productId) {
-        return productService.productDetail(productId);
+    public ProductDetailsDTO productDetail(@PathVariable long productId) {
+        Optional<ProductDetailsDTO> productDetailsDTO = productService.productDetail(productId);
+        return productDetailsDTO.get();
     }
 
     @ApiOperation(value = "상품 등룍")

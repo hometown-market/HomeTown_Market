@@ -29,11 +29,11 @@ public class ProductServiceUtil {
     }
 
     public void ProductListDTOSetWish(Page<ProductListDTO> products) {
-        Long userid = getAuthentication();
-        if (userid == null) {
+        Long userId = getAuthentication();
+        if (userId == null) {
             return;
         }
-        Set<Long> productIds = wishRepository.getProductIds(userid);
+        Set<Long> productIds = wishRepository.getProductIds(userId);
         products.iterator().forEachRemaining(productListDTO -> {
             if (productIds.contains(productListDTO.getId())) {
                 productListDTO.setWish(true);

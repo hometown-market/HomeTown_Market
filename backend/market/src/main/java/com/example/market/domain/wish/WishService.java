@@ -20,7 +20,7 @@ public class WishService {
     private final UserRepository userRepository;
 
 
-    public void wishing(long productId) {
+    public boolean wishing(long productId) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
@@ -34,9 +34,15 @@ public class WishService {
 
             if (productIds.contains(productId)) {
                 wishRepository.delete(wish);
+                return false;
             } else {
                 wishRepository.save(wish);
+                return true;
             }
+
+
         }
+        return false;
     }
+
 }

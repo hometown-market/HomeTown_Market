@@ -2,6 +2,7 @@ package com.example.market.domain.product.repository;
 
 import com.example.market.domain.category.Category;
 import com.example.market.domain.product.Product;
+import com.example.market.domain.product.ProductStatus;
 import com.example.market.domain.product.dto.ProductCategoryCountDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ ProductRepository extends JpaRepository<Product, Long> {
     @Query("select p from Product p where p.category.categoryId like concat(?1, '%') order by p.uploadDate DESC")
     Page<Product> findByCategory_CategoryIdStartsWithOrderByUploadDateDesc(String categoryId, Pageable pageable);
 
+
     @Query(value = "SELECT * FROM product WHERE LIKE '%keyword%' ORDER BY DESC", nativeQuery = true)
     Page<Product> findByTitle(String keyword, Pageable pageable);
 
@@ -32,6 +34,8 @@ ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> findShopWishProducts(@Param("userId") long userId, Pageable pageable);
 
     Page<Product> findByUser_Id(long id, Pageable pageable);
+
+    Page<Product> findByUser_IdAndProductStatus(long id, ProductStatus productStatus, Pageable pageable);
 
     Page<Product> findAllByCategoryOrderByUploadDateDesc(Category category, Pageable pageable);
 
